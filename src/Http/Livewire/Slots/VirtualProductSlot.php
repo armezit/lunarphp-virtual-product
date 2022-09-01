@@ -112,19 +112,26 @@ class VirtualProductSlot extends Component implements AbstractSlot
      */
     private function initSources(): ProductSources
     {
-        // for new products, all sources enabled by default.
         // for existing products, read their enabled sources from db.
-        if (!$this->slotModel || !$this->slotModel->exists) {
-            $enabledSources = $this->getSourceProviders();
-        } else {
-            $enabledSources = VirtualProduct::firstOrNew(['product_id' => $this->slotModel->id])
-                ->sources
-                ->toArray();
+        // if no virtual product exists for the current product (either new or existing product),
+        // enable all sources by default
 
-            // if existing product has virtual-product sources, enable the whole slot
-            if (count($enabledSources) > 0) {
-                $this->enabled = true;
+        if ($this->slotModel && $this->slotModel->exists) {
+            $virtualProduct = VirtualProduct::firstOrNew(['product_id' => $this->slotModel->id]);
+
+            if (!blank($virtualProduct->sources)) {
+                $enabledSources = $virtualProduct->sources->toArray();
+
+                // if existing product has virtual-product sources, enable the whole slot
+                if (count($enabledSources) > 0) {
+                    $this->enabled = true;
+                }
             }
+        }
+
+        // for all other products, mark all sources as enabled but don't enable slot
+        if (!isset($enabledSources)) {
+            $enabledSources = $this->getSourceProviders()->toArray();
         }
 
         $this->sources = new ProductSources(
