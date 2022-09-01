@@ -1,0 +1,79 @@
+{
+    "name": "armezit/getcandy-virtual-product",
+    "description": "GetCandy v2 E-Commerce Virtual Product Addon",
+    "keywords": [
+        "getcandy",
+        "laravel",
+        "ecommerce",
+        "e-commerce",
+        "virtual-product"
+    ],
+    "homepage": "https://github.com/armezit/getcandy-virtual-product",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Armin Rezayati",
+            "email": "armin.rezayati@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "getcandy/admin": "^2",
+        "getcandy/core": "^2",
+        "illuminate/contracts": "^9.0",
+        "livewire/livewire": "^2.0",
+        "spatie/data-transfer-object": "^3.8",
+        "spatie/laravel-package-tools": "^1.9.2"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^6.0",
+        "nunomaduro/larastan": "^2.0.1",
+        "orchestra/testbench": "^7.0",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.1",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Armezit\\GetCandy\\VirtualProduct\\": "src",
+            "Armezit\\GetCandy\\VirtualProduct\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GetCandy\\Tests\\": "./vendor/getcandy/core/tests",
+            "Armezit\\GetCandy\\VirtualProduct\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Armezit\\GetCandy\\VirtualProduct\\VirtualProductServiceProvider",
+                "Armezit\\GetCandy\\VirtualProduct\\VirtualProductHubServiceProvider"
+            ],
+            "aliases": {
+                "VirtualProduct": "Armezit\\GetCandy\\VirtualProduct\\Facades\\VirtualProduct"
+            }
+        },
+        "getcandy": {
+            "name": "Virtual Product",
+            "slug": "virtual-product"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
