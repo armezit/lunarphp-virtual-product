@@ -121,7 +121,7 @@ class VirtualProductSlot extends Component implements AbstractSlot
         if ($this->slotModel && $this->slotModel->exists) {
             $virtualProduct = VirtualProduct::firstOrNew(['product_id' => $this->slotModel->id]);
 
-            if (!blank($virtualProduct->sources)) {
+            if (! blank($virtualProduct->sources)) {
                 $enabledSources = $virtualProduct->sources->toArray();
 
                 // if existing product has virtual-product sources, enable the whole slot
@@ -132,13 +132,13 @@ class VirtualProductSlot extends Component implements AbstractSlot
         }
 
         // for all other products, mark all sources as enabled but don't enable slot
-        if (!isset($enabledSources)) {
+        if (! isset($enabledSources)) {
             $enabledSources = $this->getSourceProviders()->toArray();
         }
 
         $this->sources = new ProductSources(
             sources: $this->getSourceProviders()
-                ->map(fn(string $sourceProvider) => new Source(
+                ->map(fn (string $sourceProvider) => new Source(
                     $sourceProvider,
                     in_array($sourceProvider, $enabledSources, true)),
                 )
