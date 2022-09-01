@@ -14,6 +14,15 @@ class VirtualProduct extends Model
 {
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<string>
+     */
+    protected $fillable = [
+        'product_id'
+    ];
+
+    /**
      * @var array
      */
     protected $casts = [
