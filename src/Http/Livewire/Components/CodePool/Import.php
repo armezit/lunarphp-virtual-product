@@ -10,7 +10,6 @@ use Livewire\Component;
 
 class Import extends Component
 {
-
     use Notifies;
 
     protected $queryString = [
@@ -67,8 +66,8 @@ class Import extends Component
         return VirtualProduct::onlyCodePool()
             ->with('product')
             ->get()
-            ->mapWithKeys(fn($vp) => [
-                $vp->product->id => $vp->product->translateAttribute('name')
+            ->mapWithKeys(fn ($vp) => [
+                $vp->product->id => $vp->product->translateAttribute('name'),
             ])
             ->all();
     }
@@ -85,8 +84,8 @@ class Import extends Component
         return ProductVariant::where(['product_id' => $this->productId])
             ->with('product')
             ->get()
-            ->mapWithKeys(fn($v) => [
-                $v->id => $v->translateAttribute('name') ?: $v->product->translateAttribute('name')
+            ->mapWithKeys(fn ($v) => [
+                $v->id => $v->translateAttribute('name') ?: $v->product->translateAttribute('name'),
             ])
             ->all();
     }
@@ -101,7 +100,7 @@ class Import extends Component
         $this->defaultCurrencyId = $currencies->first(fn ($currency) => $currency->default === true)->id;
 
         $this->currencies = $currencies
-            ->mapWithKeys(fn($c) => [$c->id => $c->code])
+            ->mapWithKeys(fn ($c) => [$c->id => $c->code])
             ->all();
     }
 
@@ -114,5 +113,4 @@ class Import extends Component
     {
         return view('getcandy-virtual-product::livewire.components.code-pool.import');
     }
-
 }

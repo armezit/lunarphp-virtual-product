@@ -54,5 +54,4 @@ class CodePoolArchive extends Model
     {
         return $this->belongsTo(OrderLine::class, 'order_line_id');
     }
-
 }

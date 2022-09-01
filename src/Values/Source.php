@@ -8,11 +8,14 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class Source extends DataTransferObject implements Wireable
 {
-
     public string $class;
+
     public bool $enabled;
+
     public string $name;
+
     public ?int $stock;
+
     public array $data;
 
     /**
@@ -21,8 +24,9 @@ class Source extends DataTransferObject implements Wireable
     private SourceProvider $sourceProvider;
 
     /**
-     * @param string $class
-     * @param bool $enabled
+     * @param  string  $class
+     * @param  bool  $enabled
+     *
      * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
      */
     public function __construct(string $class, bool $enabled = false, array $data = [])
@@ -39,8 +43,8 @@ class Source extends DataTransferObject implements Wireable
     }
 
     /**
-     * @param string $name
-     * @param array $arguments
+     * @param  string  $name
+     * @param  array  $arguments
      * @return mixed
      */
     public function __call(string $name, array $arguments)

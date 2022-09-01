@@ -2,17 +2,13 @@
 
 namespace Armezit\GetCandy\VirtualProduct\Models;
 
-use Armezit\GetCandy\VirtualProduct\Database\Factories\CodePoolSchemaFactory;
 use GetCandy\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class VirtualProduct extends Model
 {
-
     /**
      * The attributes that are mass assignable.
      *
@@ -42,7 +38,7 @@ class VirtualProduct extends Model
     /**
      * Scope a query to only include virtual products which have CodePool source
      *
-     * @param Builder $query
+     * @param  Builder  $query
      * @return Builder
      */
     public function scopeOnlyCodePool(Builder $query): Builder
@@ -60,5 +56,4 @@ class VirtualProduct extends Model
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
-
 }

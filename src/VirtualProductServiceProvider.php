@@ -30,5 +30,4 @@ class VirtualProductServiceProvider extends PackageServiceProvider
                 ListVirtualProducts::class,
             ]);
     }
-
 }

@@ -12,7 +12,6 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class ProductSources extends DataTransferObject implements Wireable, ArrayAccess, IteratorAggregate
 {
-
     /**
      * @var Source[]
      */
@@ -22,7 +21,7 @@ class ProductSources extends DataTransferObject implements Wireable, ArrayAccess
     public function toLivewire()
     {
         return collect($this->sources)
-            ->map(fn(Source $source) => $source->toLivewire())
+            ->map(fn (Source $source) => $source->toLivewire())
             ->toArray();
     }
 
@@ -30,7 +29,7 @@ class ProductSources extends DataTransferObject implements Wireable, ArrayAccess
     {
         return new static(
             sources: collect($value)
-                ->map(fn(array $args) => new Source($args['class'], $args['enabled'], $args['data']))
+                ->map(fn (array $args) => new Source($args['class'], $args['enabled'], $args['data']))
                 ->toArray(),
         );
     }

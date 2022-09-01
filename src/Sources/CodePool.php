@@ -8,7 +8,6 @@ use GetCandy\Models\Product;
 
 class CodePool implements SourceProvider
 {
-
     public function getName(): string
     {
         return __('getcandy-virtual-product::code-pool.label');
@@ -32,5 +31,4 @@ class CodePool implements SourceProvider
         $codePoolSchema->schema = $data;
         $codePoolSchema->save();
     }
-
 }

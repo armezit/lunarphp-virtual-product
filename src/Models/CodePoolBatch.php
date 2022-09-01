@@ -47,5 +47,4 @@ class CodePoolBatch extends Model
     {
         return $this->morphTo();
     }
-
 }

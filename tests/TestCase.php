@@ -2,8 +2,8 @@
 
 namespace Armezit\GetCandy\VirtualProduct\Tests;
 
-use Armezit\GetCandy\VirtualProduct\VirtualProductServiceProvider;
 use Armezit\GetCandy\VirtualProduct\Tests\Concerns\FixesSqliteDropForeign;
+use Armezit\GetCandy\VirtualProduct\VirtualProductServiceProvider;
 use Cartalyst\Converter\Laravel\ConverterServiceProvider;
 use GetCandy\GetCandyServiceProvider;
 use GetCandy\Models\Language;

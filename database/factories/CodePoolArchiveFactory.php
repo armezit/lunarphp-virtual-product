@@ -4,7 +4,6 @@ namespace Armezit\GetCandy\VirtualProduct\Database\Factories;
 
 use Armezit\GetCandy\VirtualProduct\Models\CodePoolArchive;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class CodePoolArchiveFactory extends Factory
 {
