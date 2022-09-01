@@ -9,6 +9,7 @@ use Livewire\Wireable;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
 use Spatie\DataTransferObject\DataTransferObject;
+use Traversable;
 
 class ProductSources extends DataTransferObject implements Wireable, ArrayAccess, IteratorAggregate
 {
@@ -44,17 +45,17 @@ class ProductSources extends DataTransferObject implements Wireable, ArrayAccess
         }
     }
 
-    public function offsetExists(mixed $offset)
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->sources[$offset]);
     }
 
-    public function offsetGet(mixed $offset)
+    public function offsetGet(mixed $offset): Source
     {
         return $this->sources[$offset];
     }
 
-    public function offsetSet(mixed $offset, mixed $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
             $this->sources[] = $value;
@@ -63,12 +64,12 @@ class ProductSources extends DataTransferObject implements Wireable, ArrayAccess
         }
     }
 
-    public function offsetUnset(mixed $offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->sources[$offset]);
     }
 
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->sources);
     }
