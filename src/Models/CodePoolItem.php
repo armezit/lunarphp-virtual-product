@@ -45,5 +45,4 @@ class CodePoolItem extends Model
     {
         return $this->belongsTo(CodePoolBatch::class, 'batch_id');
     }
-
 }

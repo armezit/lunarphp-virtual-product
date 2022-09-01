@@ -11,7 +11,6 @@ Route::group([
     'prefix' => config('getcandy-hub.system.path', 'hub'),
     'middleware' => ['web'],
 ], function () {
-
     Route::group([
         'prefix' => 'virtual-product',
         'middleware' => [
@@ -19,11 +18,9 @@ Route::group([
             'can:catalogue:manage-products',
         ],
     ], function ($router) {
-
         /*
          * CodePool routes
          */
         Route::get('/code-pool/import', Import::class)->name('hub.virtual-product.code-pool.import');
-
     });
 });

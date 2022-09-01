@@ -2,8 +2,8 @@
 
 namespace Armezit\GetCandy\VirtualProduct;
 
-use Armezit\GetCandy\VirtualProduct\Http\Livewire\Components\CodePool\ProductSettings;
 use Armezit\GetCandy\VirtualProduct\Http\Livewire\Components\CodePool\Import;
+use Armezit\GetCandy\VirtualProduct\Http\Livewire\Components\CodePool\ProductSettings;
 use Armezit\GetCandy\VirtualProduct\Http\Livewire\Slots\VirtualProductSlot;
 use GetCandy\Hub\Facades\Slot;
 use Illuminate\Support\ServiceProvider;
@@ -11,7 +11,6 @@ use Livewire\Livewire;
 
 class VirtualProductHubServiceProvider extends ServiceProvider
 {
-
     /**
      * Boot up the service provider.
      *

@@ -6,7 +6,6 @@ use Livewire\Component;
 
 class Import extends Component
 {
-
     public function render()
     {
         return view('getcandy-virtual-product::livewire.pages.code-pool.import')
@@ -14,5 +13,4 @@ class Import extends Component
                 'title' => __('getcandy-virtual-product::code-pool.pages.import.title'),
             ]);
     }
-
 }

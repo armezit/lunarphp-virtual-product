@@ -32,10 +32,10 @@ class VirtualProductSlot extends Component implements AbstractSlot
 
     /**
      * source provider class names
+     *
      * @var Collection
      */
     private Collection $sourceProviders;
-
 
     public static function getName()
     {
@@ -89,7 +89,7 @@ class VirtualProductSlot extends Component implements AbstractSlot
     protected function getListeners()
     {
         return [
-            'sourceUpdated' => 'onSourceDataUpdated'
+            'sourceUpdated' => 'onSourceDataUpdated',
         ];
     }
 
@@ -100,21 +100,23 @@ class VirtualProductSlot extends Component implements AbstractSlot
 
     public function getSourceProviders(): Collection
     {
-        if (!isset($this->sourceProviders)) {
+        if (! isset($this->sourceProviders)) {
             $this->sourceProviders = collect(config('getcandy-virtual-product.sources', []));
         }
+
         return $this->sourceProviders;
     }
 
     /**
      * Init Source provider instances
+     *
      * @return ProductSources
      */
     private function initSources(): ProductSources
     {
         // for new products, all sources enabled by default.
         // for existing products, read their enabled sources from db.
-        if (!$this->slotModel || !$this->slotModel->exists) {
+        if (! $this->slotModel || ! $this->slotModel->exists) {
             $enabledSources = $this->getSourceProviders();
         } else {
             $enabledSources = VirtualProduct::firstOrNew(['product_id' => $this->slotModel->id])
@@ -129,7 +131,7 @@ class VirtualProductSlot extends Component implements AbstractSlot
 
         $this->sources = new ProductSources(
             sources: $this->getSourceProviders()
-                ->map(fn(string $sourceProvider) => new Source(
+                ->map(fn (string $sourceProvider) => new Source(
                     $sourceProvider,
                     in_array($sourceProvider, $enabledSources, true)),
                 )
@@ -141,7 +143,8 @@ class VirtualProductSlot extends Component implements AbstractSlot
 
     /**
      * Keep source data to be used later on saving slot
-     * @param mixed $payload
+     *
+     * @param  mixed  $payload
      * @return void
      */
     public function onSourceDataUpdated(mixed $payload)
@@ -173,8 +176,8 @@ class VirtualProductSlot extends Component implements AbstractSlot
     }
 
     /**
-     * @param Product $model
-     * @param array $data
+     * @param  Product  $model
+     * @param  array  $data
      * @return \Illuminate\Support\MessageBag|void
      */
     public function handleSlotSave($model, $data)
@@ -204,5 +207,4 @@ class VirtualProductSlot extends Component implements AbstractSlot
             $virtualProduct->save();
         });
     }
-
 }

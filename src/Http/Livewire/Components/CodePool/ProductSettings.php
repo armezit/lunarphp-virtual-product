@@ -10,7 +10,6 @@ use Livewire\Component;
 
 class ProductSettings extends Component
 {
-
     /**
      * @var Product|null
      */
@@ -29,8 +28,8 @@ class ProductSettings extends Component
     protected function rules()
     {
         return [
-            'schema'    => 'required|array|min:1',
-            'schema.*'  => 'required|string|distinct',
+            'schema' => 'required|array|min:1',
+            'schema.*' => 'required|string|distinct',
         ];
     }
 
@@ -47,8 +46,9 @@ class ProductSettings extends Component
 
     private function initSchema()
     {
-        if ($this->product === null || !$this->product->exists) {
+        if ($this->product === null || ! $this->product->exists) {
             $this->schema = [];
+
             return;
         }
 
@@ -63,10 +63,10 @@ class ProductSettings extends Component
     private function initListField()
     {
         $this->listField = [
-            'id'             => 'schema',
-            'signature'      => 'schema',
-            'type'           => ListField::class,
-            'view'           => app()->make(ListField::class)->getView(),
+            'id' => 'schema',
+            'signature' => 'schema',
+            'type' => ListField::class,
+            'view' => app()->make(ListField::class)->getView(),
         ];
     }
 
@@ -84,5 +84,4 @@ class ProductSettings extends Component
             'data' => $data,
         ]);
     }
-
 }
