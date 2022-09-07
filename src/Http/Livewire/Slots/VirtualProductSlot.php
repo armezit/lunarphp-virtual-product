@@ -196,8 +196,13 @@ class VirtualProductSlot extends Component implements AbstractSlot
 
         $this->slotModel = $model;
 
-        DB::transaction(function () use ($model, $validator) {
-            $validatedData = $validator->validated();
+        $validatedData = $validator->validated();
+
+        if (!isset($validatedData['sources'])) {
+            return;
+        }
+
+        DB::transaction(function () use ($validatedData, $model, $validator) {
             $enabledSources = collect($validatedData['sources'])->whereStrict('enabled', true);
 
             // save each source provider data
@@ -214,4 +219,5 @@ class VirtualProductSlot extends Component implements AbstractSlot
             $virtualProduct->save();
         });
     }
+
 }
