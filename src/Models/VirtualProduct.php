@@ -15,7 +15,7 @@ class VirtualProduct extends Model
      * @var array<string>
      */
     protected $fillable = [
-        'product_id'
+        'product_id',
     ];
 
     /**
