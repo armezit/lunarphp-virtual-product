@@ -5,9 +5,9 @@ namespace Armezit\Lunar\VirtualProduct;
 use Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool\Import;
 use Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool\ProductSettings;
 use Armezit\Lunar\VirtualProduct\Http\Livewire\Slots\VirtualProductSlot;
-use Lunar\Hub\Facades\Slot;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
+use Lunar\Hub\Facades\Slot;
 
 class VirtualProductHubServiceProvider extends ServiceProvider
 {

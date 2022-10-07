@@ -3,10 +3,10 @@
 namespace Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool;
 
 use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
+use Livewire\Component;
 use Lunar\Hub\Http\Livewire\Traits\Notifies;
 use Lunar\Models\Currency;
 use Lunar\Models\ProductVariant;
-use Livewire\Component;
 
 class Import extends Component
 {

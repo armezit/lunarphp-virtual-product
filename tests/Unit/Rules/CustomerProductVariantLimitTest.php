@@ -7,6 +7,8 @@ use Armezit\Lunar\VirtualProduct\Exceptions\ProductVariantTotalLimitException;
 use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
 use Armezit\Lunar\VirtualProduct\Rules\CustomerProductVariantLimit;
 use Armezit\Lunar\VirtualProduct\Tests\TestCase;
+use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Lunar\Actions\Carts\CalculateLine;
 use Lunar\Models\Cart;
 use Lunar\Models\Currency;
@@ -15,8 +17,6 @@ use Lunar\Models\CustomerGroup;
 use Lunar\Models\Price;
 use Lunar\Models\ProductVariant;
 use Lunar\Tests\Stubs\User;
-use Illuminate\Database\Eloquent\Factories\Sequence;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CustomerProductVariantLimitTest extends TestCase
 {

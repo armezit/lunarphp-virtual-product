@@ -6,15 +6,15 @@ use Armezit\Lunar\VirtualProduct\Contracts\SourceProvider;
 use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
 use Armezit\Lunar\VirtualProduct\Values\ProductSources;
 use Armezit\Lunar\VirtualProduct\Values\Source;
-use Lunar\Hub\Slots\AbstractSlot;
-use Lunar\Hub\Slots\Traits\HubSlot;
-use Lunar\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
+use Lunar\Hub\Slots\AbstractSlot;
+use Lunar\Hub\Slots\Traits\HubSlot;
+use Lunar\Models\Product;
 
 class VirtualProductSlot extends Component implements AbstractSlot
 {
