@@ -3,8 +3,8 @@
 namespace Armezit\Lunar\VirtualProduct\Database\Factories;
 
 use Armezit\Lunar\VirtualProduct\Models\CodePoolBatch;
-use Lunar\Models\ProductVariant;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Lunar\Models\ProductVariant;
 
 class CodePoolBatchFactory extends Factory
 {

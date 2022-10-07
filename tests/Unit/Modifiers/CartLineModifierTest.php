@@ -8,14 +8,14 @@ use Armezit\Lunar\VirtualProduct\Rules\CartLineRuleInterface;
 use Armezit\Lunar\VirtualProduct\Rules\CustomerProductVariantLimit;
 use Armezit\Lunar\VirtualProduct\Rules\ProductVariantLimit;
 use Armezit\Lunar\VirtualProduct\Tests\TestCase;
+use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Lunar\Models\Cart;
 use Lunar\Models\Currency;
 use Lunar\Models\Customer;
 use Lunar\Models\CustomerGroup;
 use Lunar\Models\ProductVariant;
 use Lunar\Tests\Stubs\User;
-use Illuminate\Database\Eloquent\Factories\Sequence;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CartLineModifierTest extends TestCase
 {

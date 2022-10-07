@@ -2,10 +2,10 @@
 
 namespace Armezit\Lunar\VirtualProduct\Models;
 
-use Lunar\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Model;
+use Lunar\Models\Product;
 
 class VirtualProduct extends Model
 {

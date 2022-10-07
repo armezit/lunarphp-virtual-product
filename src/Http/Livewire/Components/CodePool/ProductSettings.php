@@ -4,9 +4,9 @@ namespace Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool;
 
 use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
 use Armezit\Lunar\VirtualProduct\Sources\CodePool;
+use Livewire\Component;
 use Lunar\FieldTypes\ListField;
 use Lunar\Models\Product;
-use Livewire\Component;
 
 class ProductSettings extends Component
 {

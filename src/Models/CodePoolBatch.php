@@ -3,9 +3,9 @@
 namespace Armezit\Lunar\VirtualProduct\Models;
 
 use Armezit\Lunar\VirtualProduct\Database\Factories\CodePoolBatchFactory;
-use Lunar\Base\Casts\Price as CastsPrice;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Lunar\Base\Casts\Price as CastsPrice;
 
 class CodePoolBatch extends Model
 {

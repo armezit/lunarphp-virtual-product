@@ -3,10 +3,10 @@
 namespace Armezit\Lunar\VirtualProduct\Models;
 
 use Armezit\Lunar\VirtualProduct\Database\Factories\CodePoolArchiveFactory;
-use Lunar\Models\OrderLine;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Lunar\Models\OrderLine;
 
 class CodePoolArchive extends Model
 {

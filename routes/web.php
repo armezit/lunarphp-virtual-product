@@ -1,8 +1,8 @@
 <?php
 
 use Armezit\Lunar\VirtualProduct\Http\Livewire\Pages\CodePool\Import;
-use Lunar\Hub\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
+use Lunar\Hub\Http\Middleware\Authenticate;
 
 /*
  * Admin Hub Routes

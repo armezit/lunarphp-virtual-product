@@ -4,12 +4,12 @@ namespace Armezit\Lunar\VirtualProduct\Tests\Unit\Models;
 
 use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
 use Armezit\Lunar\VirtualProduct\Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Lunar\Models\Customer;
 use Lunar\Models\CustomerGroup;
 use Lunar\Models\Product;
 use Lunar\Models\ProductVariant;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 
 class VirtualProductTest extends TestCase
 {
