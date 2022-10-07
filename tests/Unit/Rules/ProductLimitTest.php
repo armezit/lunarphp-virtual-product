@@ -1,17 +1,17 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Tests\Unit\Rules;
+namespace Armezit\Lunar\VirtualProduct\Tests\Unit\Rules;
 
-use Armezit\GetCandy\VirtualProduct\Exceptions\ProductQuantityLimitException;
-use Armezit\GetCandy\VirtualProduct\Exceptions\ProductTotalLimitException;
-use Armezit\GetCandy\VirtualProduct\Models\VirtualProduct;
-use Armezit\GetCandy\VirtualProduct\Rules\ProductLimit;
-use Armezit\GetCandy\VirtualProduct\Tests\TestCase;
-use GetCandy\Models\Cart;
-use GetCandy\Models\Currency;
-use GetCandy\Models\Price;
-use GetCandy\Models\Product;
-use GetCandy\Models\ProductVariant;
+use Armezit\Lunar\VirtualProduct\Exceptions\ProductQuantityLimitException;
+use Armezit\Lunar\VirtualProduct\Exceptions\ProductTotalLimitException;
+use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
+use Armezit\Lunar\VirtualProduct\Rules\ProductLimit;
+use Armezit\Lunar\VirtualProduct\Tests\TestCase;
+use Lunar\Models\Cart;
+use Lunar\Models\Currency;
+use Lunar\Models\Price;
+use Lunar\Models\Product;
+use Lunar\Models\ProductVariant;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

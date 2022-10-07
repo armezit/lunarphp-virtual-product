@@ -1,14 +1,14 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct;
+namespace Armezit\Lunar\VirtualProduct;
 
-use Armezit\GetCandy\VirtualProduct\Commands\ListVirtualProducts;
+use Armezit\Lunar\VirtualProduct\Commands\ListVirtualProducts;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class VirtualProductServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'getcandy-virtual-product';
+    public static string $name = 'lunarphp-virtual-product';
 
     public function configurePackage(Package $package): void
     {

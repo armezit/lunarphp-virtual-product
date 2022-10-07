@@ -1,12 +1,12 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Commands;
+namespace Armezit\Lunar\VirtualProduct\Commands;
 
 use Illuminate\Console\Command;
 
 class ListVirtualProducts extends Command
 {
-    public $signature = 'getcandy:virtual-product:list';
+    public $signature = 'lunar:virtual-product:list';
 
     public $description = 'List all defined virtual products';
 

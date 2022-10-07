@@ -1,9 +1,9 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Database\Factories;
+namespace Armezit\Lunar\VirtualProduct\Database\Factories;
 
-use Armezit\GetCandy\VirtualProduct\Models\CodePoolBatch;
-use GetCandy\Models\ProductVariant;
+use Armezit\Lunar\VirtualProduct\Models\CodePoolBatch;
+use Lunar\Models\ProductVariant;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CodePoolBatchFactory extends Factory

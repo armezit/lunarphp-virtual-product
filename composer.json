@@ -1,14 +1,14 @@
 {
-    "name": "armezit/getcandy-virtual-product",
-    "description": "GetCandy v2 E-Commerce Virtual Product Addon",
+    "name": "armezit/lunarphp-virtual-product",
+    "description": "Lunar E-Commerce Virtual Product Addon",
     "keywords": [
-        "getcandy",
+        "lunar",
         "laravel",
         "ecommerce",
         "e-commerce",
         "virtual-product"
     ],
-    "homepage": "https://github.com/armezit/getcandy-virtual-product",
+    "homepage": "https://github.com/armezit/lunarphp-virtual-product",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -19,10 +19,9 @@
     ],
     "require": {
         "php": "^8.0",
-        "getcandy/admin": "^2",
-        "getcandy/core": "^2",
         "illuminate/contracts": "^9.0",
         "livewire/livewire": "^2.0",
+        "lunarphp/lunar": "^0.1",
         "spatie/data-transfer-object": "^3.8",
         "spatie/laravel-package-tools": "^1.9.2"
     },
@@ -40,14 +39,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Armezit\\GetCandy\\VirtualProduct\\": "src",
-            "Armezit\\GetCandy\\VirtualProduct\\Database\\Factories\\": "database/factories"
+            "Armezit\\Lunar\\VirtualProduct\\": "src",
+            "Armezit\\Lunar\\VirtualProduct\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "GetCandy\\Tests\\": "./vendor/getcandy/core/tests",
-            "Armezit\\GetCandy\\VirtualProduct\\Tests\\": "tests"
+            "Lunar\\Tests\\": "./vendor/lunar/core/tests",
+            "Armezit\\Lunar\\VirtualProduct\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -62,14 +61,14 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Armezit\\GetCandy\\VirtualProduct\\VirtualProductServiceProvider",
-                "Armezit\\GetCandy\\VirtualProduct\\VirtualProductHubServiceProvider"
+                "Armezit\\Lunar\\VirtualProduct\\VirtualProductServiceProvider",
+                "Armezit\\Lunar\\VirtualProduct\\VirtualProductHubServiceProvider"
             ],
             "aliases": {
-                "VirtualProduct": "Armezit\\GetCandy\\VirtualProduct\\Facades\\VirtualProduct"
+                "VirtualProduct": "Armezit\\Lunar\\VirtualProduct\\Facades\\VirtualProduct"
             }
         },
-        "getcandy": {
+        "lunar": {
             "name": "Virtual Product",
             "slug": "virtual-product"
         }

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        $tableName = config('getcandy-virtual-product.code_pool.archive_table');
+        $tableName = config('lunarphp-virtual-product.code_pool.archive_table');
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
             $table->bigInteger('batch_id')->unsigned()->index();
@@ -30,7 +30,7 @@ return new class extends Migration
      */
     public function down()
     {
-        $tableName = config('getcandy-virtual-product.code_pool.archive_table');
+        $tableName = config('lunarphp-virtual-product.code_pool.archive_table');
         Schema::dropIfExists($tableName);
     }
 };

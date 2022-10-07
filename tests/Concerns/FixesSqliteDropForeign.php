@@ -1,6 +1,6 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Tests\Concerns;
+namespace Armezit\Lunar\VirtualProduct\Tests\Concerns;
 
 trait FixesSqliteDropForeign
 {

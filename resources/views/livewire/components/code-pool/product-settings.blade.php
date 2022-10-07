@@ -3,10 +3,10 @@
         <div class="flex items-center justify-between space-x-2 rtl:space-x-reverse">
             <label class="inline-flex items-center space-x-3 rtl:space-x-reverse">
                 <span class="text-sm font-medium leading-4 text-gray-700 dark:text-gray-300">
-                    {{ __('getcandy-virtual-product::code-pool.product-settings.schema.label') }}
+                    {{ __('lunarphp-virtual-product::code-pool.product-settings.schema.label') }}
                 </span>
                 <span class="text-xs text-gray-500">
-                    ({{ __('getcandy-virtual-product::code-pool.product-settings.schema.strapline') }})
+                    ({{ __('lunarphp-virtual-product::code-pool.product-settings.schema.strapline') }})
                 </span>
             </label>
         </div>
@@ -26,7 +26,7 @@
         >
             <x-hub::icon ref="cloud-upload" class="w-4"/>
             <span>
-                {{ __('getcandy-virtual-product::code-pool.product-settings.import_items_btn') }}
+                {{ __('lunarphp-virtual-product::code-pool.product-settings.import_items_btn') }}
             </span>
         </x-hub::button>
     </div>

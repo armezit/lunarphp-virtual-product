@@ -3,9 +3,9 @@
         <header class="flex items-center justify-between">
             <div>
                 <h3 class="text-lg font-medium leading-6 text-gray-900">
-                    {{ __('getcandy-virtual-product::slots.virtual-product.heading') }}
+                    {{ __('lunarphp-virtual-product::slots.virtual-product.heading') }}
                 </h3>
-                <p class="text-xs text-gray-500">{{ __('getcandy-virtual-product::slots.virtual-product.strapline') }}</p>
+                <p class="text-xs text-gray-500">{{ __('lunarphp-virtual-product::slots.virtual-product.strapline') }}</p>
             </div>
             <div>
                 <x-hub::input.toggle wire:model="enabled" />
@@ -43,7 +43,7 @@
                             <div class="flex items-center justify-between gap-4 expand">
                                 <div>
                                     <input type="hidden" value="{{ $source->class }}" wire:model='sources.{{ $index }}.class'/>
-                                    <x-hub::tooltip text="{{ __('getcandy-virtual-product::default.source.enabled_tooltip') }}">
+                                    <x-hub::tooltip text="{{ __('lunarphp-virtual-product::default.source.enabled_tooltip') }}">
                                         <x-hub::input.toggle wire:model="sources.{{ $index }}.enabled" value="1" />
                                     </x-hub::tooltip>
                                 </div>
@@ -53,7 +53,7 @@
                                 @if($source->stock)
                                 <label class="inline-flex items-center cursor-pointer">
                                     <span class="block me-2 text-xs font-bold text-gray-500">
-                                        {{ __('getcandy-virtual-product::default.source.stock') }}: {{ $source->stock }}
+                                        {{ __('lunarphp-virtual-product::default.source.stock') }}: {{ $source->stock }}
                                     </span>
                                 </label>
                                 @endif
@@ -82,7 +82,7 @@
                 </div>
             @empty
                 <div class="w-full text-center text-gray-500">
-                    {{ __('getcandy-virtual-product::slots.virtual-product.no_sources') }}
+                    {{ __('lunarphp-virtual-product::slots.virtual-product.no_sources') }}
                 </div>
             @endforelse
         </div>

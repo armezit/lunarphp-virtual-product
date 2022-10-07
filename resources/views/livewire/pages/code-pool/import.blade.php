@@ -1,3 +1,3 @@
 <div>
-    @livewire('hub.getcandy-virtual-product.components.code_pool.import')
+    @livewire('hub.lunarphp-virtual-product.components.code_pool.import')
 </div>

@@ -1,19 +1,19 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Tests\Unit\Modifiers;
+namespace Armezit\Lunar\VirtualProduct\Tests\Unit\Modifiers;
 
-use Armezit\GetCandy\VirtualProduct\Models\VirtualProduct;
-use Armezit\GetCandy\VirtualProduct\Modifiers\CartLineModifier;
-use Armezit\GetCandy\VirtualProduct\Rules\CartLineRuleInterface;
-use Armezit\GetCandy\VirtualProduct\Rules\CustomerProductVariantLimit;
-use Armezit\GetCandy\VirtualProduct\Rules\ProductVariantLimit;
-use Armezit\GetCandy\VirtualProduct\Tests\TestCase;
-use GetCandy\Models\Cart;
-use GetCandy\Models\Currency;
-use GetCandy\Models\Customer;
-use GetCandy\Models\CustomerGroup;
-use GetCandy\Models\ProductVariant;
-use GetCandy\Tests\Stubs\User;
+use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
+use Armezit\Lunar\VirtualProduct\Modifiers\CartLineModifier;
+use Armezit\Lunar\VirtualProduct\Rules\CartLineRuleInterface;
+use Armezit\Lunar\VirtualProduct\Rules\CustomerProductVariantLimit;
+use Armezit\Lunar\VirtualProduct\Rules\ProductVariantLimit;
+use Armezit\Lunar\VirtualProduct\Tests\TestCase;
+use Lunar\Models\Cart;
+use Lunar\Models\Currency;
+use Lunar\Models\Customer;
+use Lunar\Models\CustomerGroup;
+use Lunar\Models\ProductVariant;
+use Lunar\Tests\Stubs\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

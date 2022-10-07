@@ -3,7 +3,7 @@
 return [
 
     'sources' => [
-        \Armezit\GetCandy\VirtualProduct\Sources\CodePool::class,
+        \Armezit\Lunar\VirtualProduct\Sources\CodePool::class,
     ],
 
     /*

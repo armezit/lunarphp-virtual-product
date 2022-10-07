@@ -1,8 +1,8 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Database\Factories;
+namespace Armezit\Lunar\VirtualProduct\Database\Factories;
 
-use Armezit\GetCandy\VirtualProduct\Models\CodePoolItem;
+use Armezit\Lunar\VirtualProduct\Models\CodePoolItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CodePoolItemFactory extends Factory

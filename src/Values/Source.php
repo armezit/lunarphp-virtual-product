@@ -1,8 +1,8 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Values;
+namespace Armezit\Lunar\VirtualProduct\Values;
 
-use Armezit\GetCandy\VirtualProduct\Contracts\SourceProvider;
+use Armezit\Lunar\VirtualProduct\Contracts\SourceProvider;
 use Livewire\Wireable;
 use Spatie\DataTransferObject\DataTransferObject;
 

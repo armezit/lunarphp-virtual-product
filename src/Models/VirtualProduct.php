@@ -1,8 +1,8 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Models;
+namespace Armezit\Lunar\VirtualProduct\Models;
 
-use GetCandy\Models\Product;
+use Lunar\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Model;
@@ -32,7 +32,7 @@ class VirtualProduct extends Model
      */
     public function getTable()
     {
-        return config('getcandy-virtual-product.virtual_products_table');
+        return config('lunarphp-virtual-product.virtual_products_table');
     }
 
     /**
@@ -45,7 +45,7 @@ class VirtualProduct extends Model
     {
         return $query->whereJsonContains(
             'sources',
-            \Armezit\GetCandy\VirtualProduct\Sources\CodePool::class
+            \Armezit\Lunar\VirtualProduct\Sources\CodePool::class
         );
     }
 

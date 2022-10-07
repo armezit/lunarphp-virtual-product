@@ -1,14 +1,14 @@
 <?php
 
-use Armezit\GetCandy\VirtualProduct\Http\Livewire\Pages\CodePool\Import;
-use GetCandy\Hub\Http\Middleware\Authenticate;
+use Armezit\Lunar\VirtualProduct\Http\Livewire\Pages\CodePool\Import;
+use Lunar\Hub\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 /*
  * Admin Hub Routes
  */
 Route::group([
-    'prefix' => config('getcandy-hub.system.path', 'hub'),
+    'prefix' => config('lunar-hub.system.path', 'hub'),
     'middleware' => ['web'],
 ], function () {
     Route::group([

@@ -1,20 +1,20 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Tests\Unit\Rules;
+namespace Armezit\Lunar\VirtualProduct\Tests\Unit\Rules;
 
-use Armezit\GetCandy\VirtualProduct\Exceptions\CustomerQuantityLimitException;
-use Armezit\GetCandy\VirtualProduct\Exceptions\CustomerTotalLimitException;
-use Armezit\GetCandy\VirtualProduct\Models\VirtualProduct;
-use Armezit\GetCandy\VirtualProduct\Rules\CustomerLimit;
-use Armezit\GetCandy\VirtualProduct\Tests\TestCase;
-use GetCandy\Models\Cart;
-use GetCandy\Models\Currency;
-use GetCandy\Models\Customer;
-use GetCandy\Models\CustomerGroup;
-use GetCandy\Models\Price;
-use GetCandy\Models\Product;
-use GetCandy\Models\ProductVariant;
-use GetCandy\Tests\Stubs\User;
+use Armezit\Lunar\VirtualProduct\Exceptions\CustomerQuantityLimitException;
+use Armezit\Lunar\VirtualProduct\Exceptions\CustomerTotalLimitException;
+use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
+use Armezit\Lunar\VirtualProduct\Rules\CustomerLimit;
+use Armezit\Lunar\VirtualProduct\Tests\TestCase;
+use Lunar\Models\Cart;
+use Lunar\Models\Currency;
+use Lunar\Models\Customer;
+use Lunar\Models\CustomerGroup;
+use Lunar\Models\Price;
+use Lunar\Models\Product;
+use Lunar\Models\ProductVariant;
+use Lunar\Tests\Stubs\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

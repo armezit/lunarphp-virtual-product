@@ -1,11 +1,11 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Http\Livewire\Components\CodePool;
+namespace Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool;
 
-use Armezit\GetCandy\VirtualProduct\Models\VirtualProduct;
-use GetCandy\Hub\Http\Livewire\Traits\Notifies;
-use GetCandy\Models\Currency;
-use GetCandy\Models\ProductVariant;
+use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
+use Lunar\Hub\Http\Livewire\Traits\Notifies;
+use Lunar\Models\Currency;
+use Lunar\Models\ProductVariant;
 use Livewire\Component;
 
 class Import extends Component
@@ -111,6 +111,6 @@ class Import extends Component
 
     public function render()
     {
-        return view('getcandy-virtual-product::livewire.components.code-pool.import');
+        return view('lunarphp-virtual-product::livewire.components.code-pool.import');
     }
 }

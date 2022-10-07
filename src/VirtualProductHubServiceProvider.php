@@ -1,11 +1,11 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct;
+namespace Armezit\Lunar\VirtualProduct;
 
-use Armezit\GetCandy\VirtualProduct\Http\Livewire\Components\CodePool\Import;
-use Armezit\GetCandy\VirtualProduct\Http\Livewire\Components\CodePool\ProductSettings;
-use Armezit\GetCandy\VirtualProduct\Http\Livewire\Slots\VirtualProductSlot;
-use GetCandy\Hub\Facades\Slot;
+use Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool\Import;
+use Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool\ProductSettings;
+use Armezit\Lunar\VirtualProduct\Http\Livewire\Slots\VirtualProductSlot;
+use Lunar\Hub\Facades\Slot;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 
@@ -29,17 +29,17 @@ class VirtualProductHubServiceProvider extends ServiceProvider
      */
     protected function registerLivewireComponents()
     {
-        Livewire::component('hub.getcandy-virtual-product.slots.virtual-product-slot', VirtualProductSlot::class);
+        Livewire::component('hub.lunarphp-virtual-product.slots.virtual-product-slot', VirtualProductSlot::class);
 
-        Livewire::component('hub.getcandy-virtual-product.components.code_pool.product-settings', ProductSettings::class);
-        Livewire::component('hub.getcandy-virtual-product.components.code_pool.import', Import::class);
+        Livewire::component('hub.lunarphp-virtual-product.components.code_pool.product-settings', ProductSettings::class);
+        Livewire::component('hub.lunarphp-virtual-product.components.code_pool.import', Import::class);
     }
 
     protected function registerHubSlots()
     {
-        if (config('getcandy-virtual-product.register_hub_slots', true)) {
+        if (config('lunarphp-virtual-product.register_hub_slots', true)) {
             Slot::register(
-                config('getcandy-virtual-product.virtual_product_slot', 'product.all'),
+                config('lunarphp-virtual-product.virtual_product_slot', 'product.all'),
                 VirtualProductSlot::class
             );
         }

@@ -1,14 +1,14 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Http\Livewire\Slots;
+namespace Armezit\Lunar\VirtualProduct\Http\Livewire\Slots;
 
-use Armezit\GetCandy\VirtualProduct\Contracts\SourceProvider;
-use Armezit\GetCandy\VirtualProduct\Models\VirtualProduct;
-use Armezit\GetCandy\VirtualProduct\Values\ProductSources;
-use Armezit\GetCandy\VirtualProduct\Values\Source;
-use GetCandy\Hub\Slots\AbstractSlot;
-use GetCandy\Hub\Slots\Traits\HubSlot;
-use GetCandy\Models\Product;
+use Armezit\Lunar\VirtualProduct\Contracts\SourceProvider;
+use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
+use Armezit\Lunar\VirtualProduct\Values\ProductSources;
+use Armezit\Lunar\VirtualProduct\Values\Source;
+use Lunar\Hub\Slots\AbstractSlot;
+use Lunar\Hub\Slots\Traits\HubSlot;
+use Lunar\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -39,7 +39,7 @@ class VirtualProductSlot extends Component implements AbstractSlot
 
     public static function getName()
     {
-        return 'hub.getcandy-virtual-product.slots.virtual-product-slot';
+        return 'hub.lunarphp-virtual-product.slots.virtual-product-slot';
     }
 
     public function getSlotHandle()
@@ -60,12 +60,12 @@ class VirtualProductSlot extends Component implements AbstractSlot
 
     public function getSlotTitle()
     {
-        return __('getcandy-virtual-product::slots.virtual-product.title');
+        return __('lunarphp-virtual-product::slots.virtual-product.title');
     }
 
     public function render()
     {
-        return view('getcandy-virtual-product::livewire.slots.virtual-product');
+        return view('lunarphp-virtual-product::livewire.slots.virtual-product');
     }
 
     protected function rules()
@@ -101,7 +101,7 @@ class VirtualProductSlot extends Component implements AbstractSlot
     public function getSourceProviders(): Collection
     {
         if (! isset($this->sourceProviders)) {
-            $this->sourceProviders = collect(config('getcandy-virtual-product.sources', []));
+            $this->sourceProviders = collect(config('lunarphp-virtual-product.sources', []));
         }
 
         return $this->sourceProviders;

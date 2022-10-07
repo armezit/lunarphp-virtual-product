@@ -1,13 +1,13 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Tests;
+namespace Armezit\Lunar\VirtualProduct\Tests;
 
-use Armezit\GetCandy\VirtualProduct\Tests\Concerns\FixesSqliteDropForeign;
-use Armezit\GetCandy\VirtualProduct\VirtualProductServiceProvider;
+use Armezit\Lunar\VirtualProduct\Tests\Concerns\FixesSqliteDropForeign;
+use Armezit\Lunar\VirtualProduct\VirtualProductServiceProvider;
 use Cartalyst\Converter\Laravel\ConverterServiceProvider;
-use GetCandy\GetCandyServiceProvider;
-use GetCandy\Models\Language;
-use GetCandy\Tests\Stubs\User;
+use Lunar\LunarServiceProvider;
+use Lunar\Models\Language;
+use Lunar\Tests\Stubs\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Config;
 use Kalnoy\Nestedset\NestedSetServiceProvider;
@@ -29,7 +29,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Armezit\\GetCandy\\VirtualProduct\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Armezit\\Lunar\\VirtualProduct\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
 
         // additional setup
@@ -41,13 +41,13 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function defineDatabaseMigrations()
     {
         $this->loadLaravelMigrations();
-        $this->loadMigrationsFrom(__DIR__.'/../vendor/getcandy/core/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../vendor/lunar/core/database/migrations');
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            GetCandyServiceProvider::class,
+            LunarServiceProvider::class,
             MediaLibraryServiceProvider::class,
             ActivitylogServiceProvider::class,
             ConverterServiceProvider::class,
@@ -64,7 +64,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function defineEnvironment($app)
     {
-        $app['config']->set('getcandy.database.table_prefix', '');
+        $app['config']->set('lunar.database.table_prefix', '');
     }
 
     /**

@@ -1,11 +1,11 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Http\Livewire\Components\CodePool;
+namespace Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool;
 
-use Armezit\GetCandy\VirtualProduct\Models\CodePoolSchema;
-use Armezit\GetCandy\VirtualProduct\Sources\CodePool;
-use GetCandy\FieldTypes\ListField;
-use GetCandy\Models\Product;
+use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
+use Armezit\Lunar\VirtualProduct\Sources\CodePool;
+use Lunar\FieldTypes\ListField;
+use Lunar\Models\Product;
 use Livewire\Component;
 
 class ProductSettings extends Component
@@ -72,14 +72,14 @@ class ProductSettings extends Component
 
     public function render()
     {
-        return view('getcandy-virtual-product::livewire.components.code-pool.product-settings', [
+        return view('lunarphp-virtual-product::livewire.components.code-pool.product-settings', [
             'listField' => $this->listField,
         ]);
     }
 
     public function updated(string $prop, mixed $data)
     {
-        $this->emitTo('hub.getcandy-virtual-product.slots.virtual-product-slot', 'sourceUpdated', [
+        $this->emitTo('hub.lunarphp-virtual-product.slots.virtual-product-slot', 'sourceUpdated', [
             'source' => CodePool::class,
             'data' => $data,
         ]);

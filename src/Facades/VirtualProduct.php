@@ -1,16 +1,16 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Facades;
+namespace Armezit\Lunar\VirtualProduct\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Armezit\GetCandy\VirtualProduct\GetCandyVirtualProduct
+ * @see \Armezit\Lunar\VirtualProduct\LunarVirtualProduct
  */
 class VirtualProduct extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \Armezit\GetCandy\VirtualProduct\VirtualProductManager::class;
+        return \Armezit\Lunar\VirtualProduct\VirtualProductManager::class;
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Models;
+namespace Armezit\Lunar\VirtualProduct\Models;
 
-use Armezit\GetCandy\VirtualProduct\Database\Factories\CodePoolSchemaFactory;
-use GetCandy\Models\Product;
+use Armezit\Lunar\VirtualProduct\Database\Factories\CodePoolSchemaFactory;
+use Lunar\Models\Product;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +28,7 @@ class CodePoolSchema extends Model
      */
     public function getTable()
     {
-        return config('getcandy-virtual-product.code_pool.schema_table');
+        return config('lunarphp-virtual-product.code_pool.schema_table');
     }
 
     /**

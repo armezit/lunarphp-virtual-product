@@ -1,9 +1,9 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Models;
+namespace Armezit\Lunar\VirtualProduct\Models;
 
-use Armezit\GetCandy\VirtualProduct\Database\Factories\CodePoolArchiveFactory;
-use GetCandy\Models\OrderLine;
+use Armezit\Lunar\VirtualProduct\Database\Factories\CodePoolArchiveFactory;
+use Lunar\Models\OrderLine;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,7 +26,7 @@ class CodePoolArchive extends Model
      */
     public function getTable()
     {
-        return config('getcandy-virtual-product.code_pool.archive_table');
+        return config('lunarphp-virtual-product.code_pool.archive_table');
     }
 
     /**

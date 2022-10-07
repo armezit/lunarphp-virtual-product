@@ -1,8 +1,8 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Contracts;
+namespace Armezit\Lunar\VirtualProduct\Contracts;
 
-use GetCandy\Models\Product;
+use Lunar\Models\Product;
 
 interface SourceProvider
 {

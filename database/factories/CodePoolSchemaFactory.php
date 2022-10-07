@@ -1,8 +1,8 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Database\Factories;
+namespace Armezit\Lunar\VirtualProduct\Database\Factories;
 
-use Armezit\GetCandy\VirtualProduct\Models\CodePoolSchema;
+use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 

@@ -4,11 +4,11 @@
         <div class="flex-col px-4 py-5 space-y-4 bg-white rounded-md shadow sm:p-6">
             <header>
                 <h3 class="text-lg font-medium leading-10 text-gray-900">
-                    {{ __('getcandy-virtual-product::code-pool.import.section.filters') }}
+                    {{ __('lunarphp-virtual-product::code-pool.import.section.filters') }}
                 </h3>
             </header>
 
-            <x-hub::input.group label="{{ __('getcandy-virtual-product::code-pool.import.input.product') }}"
+            <x-hub::input.group label="{{ __('lunarphp-virtual-product::code-pool.import.input.product') }}"
                                 for="productId">
                 <x-hub::input.select wire:model="productId"
                                      wire:change="onProductChange">
@@ -21,7 +21,7 @@
                 </x-hub::input.select>
             </x-hub::input.group>
 
-            <x-hub::input.group label="{{ __('getcandy-virtual-product::code-pool.import.input.product_variant') }}"
+            <x-hub::input.group label="{{ __('lunarphp-virtual-product::code-pool.import.input.product_variant') }}"
                                 for="productVariantId">
                 <x-hub::input.select wire:model="productVariantId"
                                      wire:change="refresh"
@@ -40,12 +40,12 @@
         <div class="flex-col px-4 py-5 space-y-4 bg-white rounded-md shadow sm:p-6">
             <header>
                 <h3 class="text-lg font-medium leading-10 text-gray-900">
-                    {{ __('getcandy-virtual-product::code-pool.import.section.batch_details') }}
+                    {{ __('lunarphp-virtual-product::code-pool.import.section.batch_details') }}
                 </h3>
             </header>
 
             <x-hub::input.group
-                label="{{ __('getcandy-virtual-product::code-pool.import.input.entry_price') }}"
+                label="{{ __('lunarphp-virtual-product::code-pool.import.input.entry_price') }}"
                 for="batch.entry_price">
                 <div class="mt-1 relative rounded-md shadow-sm">
                     <x-hub::input.text wire:model="batch.entry_price" />
@@ -62,7 +62,7 @@
                 </div>
             </x-hub::input.group>
 
-            <x-hub::input.group label="{{ __('getcandy-virtual-product::code-pool.import.input.notes') }}"
+            <x-hub::input.group label="{{ __('lunarphp-virtual-product::code-pool.import.input.notes') }}"
                                 for="batch.notes">
                 <x-hub::input.textarea wire:model="batch.notes" rows="1" />
             </x-hub::input.group>

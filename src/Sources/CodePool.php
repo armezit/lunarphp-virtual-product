@@ -1,16 +1,16 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Sources;
+namespace Armezit\Lunar\VirtualProduct\Sources;
 
-use Armezit\GetCandy\VirtualProduct\Contracts\SourceProvider;
-use Armezit\GetCandy\VirtualProduct\Models\CodePoolSchema;
-use GetCandy\Models\Product;
+use Armezit\Lunar\VirtualProduct\Contracts\SourceProvider;
+use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
+use Lunar\Models\Product;
 
 class CodePool implements SourceProvider
 {
     public function getName(): string
     {
-        return __('getcandy-virtual-product::code-pool.label');
+        return __('lunarphp-virtual-product::code-pool.label');
     }
 
     public function getStock(): ?int
@@ -21,7 +21,7 @@ class CodePool implements SourceProvider
 
     public function getProductSettingsComponent(): ?string
     {
-        return 'hub.getcandy-virtual-product.components.code_pool.product-settings';
+        return 'hub.lunarphp-virtual-product.components.code_pool.product-settings';
     }
 
     public function saveProductSettings(Product $product, array $data): void

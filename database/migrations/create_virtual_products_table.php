@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        $tableName = config('getcandy-virtual-product.virtual_products_table');
+        $tableName = config('lunarphp-virtual-product.virtual_products_table');
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
             $table->bigInteger('product_id')->unsigned()->unique();
@@ -29,7 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        $tableName = config('getcandy-virtual-product.virtual_products_table');
+        $tableName = config('lunarphp-virtual-product.virtual_products_table');
         Schema::dropIfExists($tableName);
     }
 };

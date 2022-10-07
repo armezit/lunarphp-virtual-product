@@ -1,6 +1,6 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct;
+namespace Armezit\Lunar\VirtualProduct;
 
 class VirtualProductManager
 {

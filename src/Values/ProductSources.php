@@ -1,6 +1,6 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Values;
+namespace Armezit\Lunar\VirtualProduct\Values;
 
 use ArrayAccess;
 use ArrayIterator;

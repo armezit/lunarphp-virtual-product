@@ -1,9 +1,9 @@
 <?php
 
-namespace Armezit\GetCandy\VirtualProduct\Models;
+namespace Armezit\Lunar\VirtualProduct\Models;
 
-use Armezit\GetCandy\VirtualProduct\Database\Factories\CodePoolBatchFactory;
-use GetCandy\Base\Casts\Price as CastsPrice;
+use Armezit\Lunar\VirtualProduct\Database\Factories\CodePoolBatchFactory;
+use Lunar\Base\Casts\Price as CastsPrice;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +25,7 @@ class CodePoolBatch extends Model
      */
     public function getTable()
     {
-        return config('getcandy-virtual-product.code_pool.batches_table');
+        return config('lunarphp-virtual-product.code_pool.batches_table');
     }
 
     /**
