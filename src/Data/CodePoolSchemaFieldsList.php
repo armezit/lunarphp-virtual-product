@@ -39,7 +39,7 @@ class CodePoolSchemaFieldsList extends Data implements Wireable, Countable, Arra
         return $this->fields->offsetExists($offset);
     }
 
-    public function offsetGet(mixed $offset): CodePoolSchemaField
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->fields->offsetGet($offset);
     }

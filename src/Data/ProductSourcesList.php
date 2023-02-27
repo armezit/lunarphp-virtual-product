@@ -52,7 +52,7 @@ class ProductSourcesList extends Data implements Wireable, ArrayAccess, Iterator
         return $this->sources->offsetExists($offset);
     }
 
-    public function offsetGet(mixed $offset): ProductSource
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->sources->offsetGet($offset);
     }
