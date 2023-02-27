@@ -31,18 +31,18 @@ class ImportCodePoolDataFromCsvFile implements ShouldQueue
      * @return void
      */
     public function __construct(
-        public CodePoolBatch  $codePoolBatch,
+        public CodePoolBatch $codePoolBatch,
         public CodePoolSchema $codePoolSchema,
-        public array          $columnsToMap,
-        public string         $csvFilePath,
-    )
-    {
+        public array $columnsToMap,
+        public string $csvFilePath,
+    ) {
     }
 
     /**
      * Execute the job.
      *
      * @return void
+     *
      * @throws Throwable
      */
     public function handle()
@@ -50,7 +50,7 @@ class ImportCodePoolDataFromCsvFile implements ShouldQueue
         $chunkSize = config('lunarphp-virtual-product.code_pool.import.chunk_size', 10);
         $chunks = (new ChunkIterator($this->getCsvDataReader()->getIterator(), $chunkSize))->get();
 
-        $jobs = collect($chunks)->map(fn($chunk) => new ImportCodePoolData(
+        $jobs = collect($chunks)->map(fn ($chunk) => new ImportCodePoolData(
             $this->codePoolBatch,
             $this->codePoolSchema,
             $chunk,
@@ -67,19 +67,17 @@ class ImportCodePoolDataFromCsvFile implements ShouldQueue
                 // All jobs completed successfully...
 
                 CodePoolBatch::where('id', $codePoolBatchId)->update([
-                    'status' => CodePoolBatchStatus::Completed->value
+                    'status' => CodePoolBatchStatus::Completed->value,
                 ]);
-
             })->catch(function (Batch $batch, Throwable $e) use ($codePoolBatchId) {
                 // First batch job failure detected...
 
                 DB::transaction(function () use ($codePoolBatchId) {
                     CodePoolBatch::where('id', $codePoolBatchId)->update([
-                        'status' => CodePoolBatchStatus::Failed->value
+                        'status' => CodePoolBatchStatus::Failed->value,
                     ]);
                     CodePoolItem::where('batch_id', $codePoolBatchId)->delete();
                 });
-
             })->finally(function (Batch $batch) {
                 // The batch has finished executing...
                 $a = 1;

@@ -71,8 +71,6 @@ class CodePoolBatch extends Model
 
     /**
      * Return a new factory instance for the model.
-     *
-     * @return CodePoolBatchFactory
      */
     protected static function newFactory(): CodePoolBatchFactory
     {
@@ -109,9 +107,6 @@ class CodePoolBatch extends Model
 
     /**
      * Scope query to include only "completed" batches
-     *
-     * @param Builder $builder
-     * @return Builder
      */
     public function scopeCompleted(Builder $builder): Builder
     {
@@ -120,10 +115,6 @@ class CodePoolBatch extends Model
 
     /**
      * Scope query to include only batches of specific purchasable
-     *
-     * @param Builder $builder
-     * @param int $purchasableId
-     * @return Builder
      */
     public function scopeForPurchasable(Builder $builder, int $purchasableId): Builder
     {
@@ -138,10 +129,6 @@ class CodePoolBatch extends Model
 
     /**
      * Scope query to include only batches of specific staff
-     *
-     * @param Builder $builder
-     * @param int $staffId
-     * @return Builder
      */
     public function scopeByStaff(Builder $builder, int $staffId): Builder
     {
@@ -150,8 +137,6 @@ class CodePoolBatch extends Model
 
     /**
      * Get the percentage of import completion
-     *
-     * @return float
      */
     public function percentageComplete(): float
     {

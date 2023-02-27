@@ -40,8 +40,6 @@ class CodePoolItem extends Model
 
     /**
      * Return a new factory instance for the model.
-     *
-     * @return CodePoolItemFactory
      */
     protected static function newFactory(): CodePoolItemFactory
     {

@@ -95,7 +95,7 @@ class ImportTest extends TestCase
         $variants = ProductVariant::factory()
             ->count(2)
             ->create([
-                'product_id' => $product->id
+                'product_id' => $product->id,
             ]);
 
         LiveWire::actingAs($staff, 'staff')
@@ -157,7 +157,7 @@ class ImportTest extends TestCase
                 ['name' => 'A', 'type' => CodePoolFieldType::Raw->value, 'order' => 1],
                 ['name' => 'B', 'type' => CodePoolFieldType::Email->value, 'order' => 2],
                 ['name' => 'C', 'type' => CodePoolFieldType::Float->value, 'order' => 3],
-            ]
+            ],
         ]);
 
         VirtualProduct::factory()->create([
@@ -171,12 +171,12 @@ class ImportTest extends TestCase
                 'b,a,c',
                 'foo@bar.com,foo,14.5',
                 ...collect(range(1, 6))
-                    ->map(fn() => implode(',', [
+                    ->map(fn () => implode(',', [
                         $this->faker->email,
                         $this->faker->word,
                         $this->faker->randomFloat(random_int(1, 4), 10, 1000),
                     ]))
-                    ->toArray()
+                    ->toArray(),
             ]));
 
         LiveWire::actingAs($staff, 'staff')
@@ -207,7 +207,7 @@ class ImportTest extends TestCase
                 'A' => 'foo',
                 'B' => 'foo@bar.com',
                 'C' => '14.5',
-            ])
+            ]),
         ]);
         $this->assertDatabaseMissing($config['items_table'], [
             'schema_id' => $codePoolSchema->id,
@@ -215,7 +215,7 @@ class ImportTest extends TestCase
                 'B' => 'foo@bar.com',
                 'A' => 'foo',
                 'C' => '14.5',
-            ])
+            ]),
         ]);
     }
 }

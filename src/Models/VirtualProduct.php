@@ -49,9 +49,6 @@ class VirtualProduct extends Model
 
     /**
      * Scope a query to only include virtual products which have CodePool source
-     *
-     * @param Builder $query
-     * @return Builder
      */
     public function scopeOnlyCodePool(Builder $query): Builder
     {

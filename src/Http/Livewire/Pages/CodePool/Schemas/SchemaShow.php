@@ -9,8 +9,6 @@ class SchemaShow extends Component
 {
     /**
      * The Product we are currently editing.
-     *
-     * @var CodePoolSchema
      */
     public CodePoolSchema $schema;
 

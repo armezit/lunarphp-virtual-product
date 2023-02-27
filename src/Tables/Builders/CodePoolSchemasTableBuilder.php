@@ -9,8 +9,6 @@ class CodePoolSchemasTableBuilder extends TableBuilder
 {
     /**
      * Return the query data.
-     *
-     * @return iterable
      */
     public function getData(): iterable
     {

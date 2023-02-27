@@ -2,8 +2,6 @@
 
 namespace Armezit\Lunar\VirtualProduct\Tests\Unit\Data;
 
-use Armezit\Lunar\VirtualProduct\Data\CodePoolSchemaField;
-use Armezit\Lunar\VirtualProduct\Data\CodePoolSchemaFieldsList;
 use Armezit\Lunar\VirtualProduct\Data\ProductSource;
 use Armezit\Lunar\VirtualProduct\Data\ProductSourcesList;
 use Armezit\Lunar\VirtualProduct\SourceProviders\CodePool;
@@ -34,7 +32,7 @@ class ProductSourcesListTest extends TestCase
                 [
                     'class' => CodePool::class,
                     'enabled' => $this->faker->boolean,
-                ]
+                ],
             ])
         );
 

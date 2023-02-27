@@ -35,8 +35,6 @@ class CodePoolSchema extends Model
 
     /**
      * Return a new factory instance for the model.
-     *
-     * @return CodePoolSchemaFactory
      */
     protected static function newFactory(): CodePoolSchemaFactory
     {

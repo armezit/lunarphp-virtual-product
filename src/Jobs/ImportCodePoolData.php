@@ -26,18 +26,18 @@ class ImportCodePoolData implements ShouldQueue
      * @return void
      */
     public function __construct(
-        public CodePoolBatch  $codePoolBatch,
+        public CodePoolBatch $codePoolBatch,
         public CodePoolSchema $codePoolSchema,
-        public array          $chunk,
-        public array          $columns,
-    )
-    {
+        public array $chunk,
+        public array $columns,
+    ) {
     }
 
     /**
      * Execute the job.
      *
      * @return void
+     *
      * @throws FieldValidationException
      */
     public function handle()
@@ -76,7 +76,7 @@ class ImportCodePoolData implements ShouldQueue
 
                 $row[$fieldName] = $fieldValue;
 
-                if (!$this->validateField(CodePoolFieldType::from($field['type']), $fieldValue)) {
+                if (! $this->validateField(CodePoolFieldType::from($field['type']), $fieldValue)) {
                     throw new FieldValidationException(
                         sprintf(
                             "field validation error for field '%s' in data record: [%s]",
@@ -88,6 +88,7 @@ class ImportCodePoolData implements ShouldQueue
             }
             $data[] = $row;
         }
+
         return $data;
     }
 
@@ -100,6 +101,7 @@ class ImportCodePoolData implements ShouldQueue
             CodePoolFieldType::Email => FILTER_VALIDATE_EMAIL,
             CodePoolFieldType::Url => FILTER_VALIDATE_URL,
         };
+
         return filter_var($value, $filter);
     }
 }

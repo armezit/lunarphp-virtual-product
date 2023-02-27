@@ -14,11 +14,10 @@ class CodePoolSchemaField extends Data implements Wireable
     use WireableData;
 
     public function __construct(
-        public ?string           $name,
+        public ?string $name,
         #[WithCast(EnumCast::class)]
         public CodePoolFieldType $type,
-        public int               $order,
-    )
-    {
+        public int $order,
+    ) {
     }
 }

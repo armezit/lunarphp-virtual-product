@@ -19,6 +19,6 @@ enum CodePoolBatchStatus: string
 
     private static function t(self $v)
     {
-        return __('lunarphp-virtual-product::code-pool.batch_status.' . $v->value);
+        return __('lunarphp-virtual-product::code-pool.batch_status.'.$v->value);
     }
 }

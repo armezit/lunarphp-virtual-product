@@ -2,10 +2,8 @@
 
 namespace Armezit\Lunar\VirtualProduct\Database\Factories;
 
-use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
 use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class VirtualProductFactory extends Factory
 {

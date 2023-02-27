@@ -41,8 +41,6 @@ class CodePoolArchive extends Model
 
     /**
      * Return a new factory instance for the model.
-     *
-     * @return CodePoolArchiveFactory
      */
     protected static function newFactory(): CodePoolArchiveFactory
     {

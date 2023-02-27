@@ -14,13 +14,12 @@ use Traversable;
 class CodePoolSchemaFieldsList extends Data implements Wireable, Countable, ArrayAccess, IteratorAggregate
 {
     /**
-     * @param DataCollection<CodePoolSchemaField> $fields
+     * @param  DataCollection<CodePoolSchemaField>  $fields
      */
     public function __construct(
         #[DataCollectionOf(CodePoolSchemaField::class)]
         public DataCollection $fields,
-    )
-    {
+    ) {
     }
 
     public function toLivewire()

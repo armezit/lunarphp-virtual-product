@@ -13,18 +13,17 @@ use Traversable;
 class ProductSourcesList extends Data implements Wireable, ArrayAccess, IteratorAggregate
 {
     /**
-     * @param DataCollection<ProductSource> $sources
+     * @param  DataCollection<ProductSource>  $sources
      */
     public function __construct(
         #[DataCollectionOf(ProductSource::class)]
         public DataCollection $sources,
-    )
-    {
+    ) {
     }
 
     public function sourceMeta(string $class, array $meta)
     {
-        $source = $this->sources->sole(fn(ProductSource $s) => $s->class === $class);
+        $source = $this->sources->sole(fn (ProductSource $s) => $s->class === $class);
         $source->meta = $meta;
     }
 
@@ -38,7 +37,7 @@ class ProductSourcesList extends Data implements Wireable, ArrayAccess, Iterator
         return new static(
             sources: ProductSource::collection(
                 collect($value)
-                    ->map(fn(array $source) => new ProductSource(
+                    ->map(fn (array $source) => new ProductSource(
                         class: $source['class'],
                         enabled: $source['enabled'],
                         meta: $source['meta']

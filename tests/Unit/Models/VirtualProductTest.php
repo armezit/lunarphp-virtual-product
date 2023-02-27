@@ -14,9 +14,6 @@ class VirtualProductTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    /**
-     * @return string
-     */
     private function getVirtualProductTable(): string
     {
         return (new VirtualProduct)->getTable();
@@ -48,7 +45,7 @@ class VirtualProductTest extends TestCase
         VirtualProduct::factory()->create(array_merge($data, ['meta' => $meta]));
 
         $this->assertDatabaseHas($this->getVirtualProductTable(), array_merge($data, [
-            'meta' => $this->castAsJson($meta)
+            'meta' => $this->castAsJson($meta),
         ]));
 
         $this->assertDatabaseHas($this->getVirtualProductTable(), [

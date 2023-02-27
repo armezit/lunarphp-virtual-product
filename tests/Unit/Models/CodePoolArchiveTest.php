@@ -17,9 +17,6 @@ class CodePoolArchiveTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    /**
-     * @return string
-     */
     private function getCodePoolArchiveTable(): string
     {
         return (new CodePoolArchive)->getTable();
@@ -51,7 +48,7 @@ class CodePoolArchiveTest extends TestCase
             'data' => [
                 'foo' => $this->faker->word,
                 'bar' => $this->faker->numberBetween(1, 50),
-            ]
+            ],
         ]);
 
         $this->assertInstanceOf(ArrayObject::class, $codePoolArchive->data);

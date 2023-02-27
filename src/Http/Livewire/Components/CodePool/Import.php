@@ -65,11 +65,11 @@ class Import extends Component
      */
     public function mount()
     {
-        if (!array_key_exists($this->productId, $this->products)) {
+        if (! array_key_exists($this->productId, $this->products)) {
             $this->productId = null;
         }
 
-        if (!array_key_exists($this->productVariantId, $this->productVariants)) {
+        if (! array_key_exists($this->productVariantId, $this->productVariants)) {
             $this->productVariantId = null;
         }
 
@@ -85,10 +85,10 @@ class Import extends Component
     {
         $currencies = Currency::get();
 
-        $this->defaultCurrencyId = $currencies->first(fn($currency) => $currency->default === true)?->id;
+        $this->defaultCurrencyId = $currencies->first(fn ($currency) => $currency->default === true)?->id;
 
         $this->currencies = $currencies
-            ->mapWithKeys(fn($c) => [$c->id => $c->code])
+            ->mapWithKeys(fn ($c) => [$c->id => $c->code])
             ->all();
     }
 
@@ -100,8 +100,8 @@ class Import extends Component
         return VirtualProduct::onlyCodePool()
             ->with('product')
             ->get()
-            ->mapWithKeys(fn(VirtualProduct $vp) => [
-                $vp->product->id => $vp->product->translateAttribute('name')
+            ->mapWithKeys(fn (VirtualProduct $vp) => [
+                $vp->product->id => $vp->product->translateAttribute('name'),
             ])
             ->all();
     }
@@ -118,7 +118,7 @@ class Import extends Component
         return ProductVariant::where(['product_id' => $this->productId])
             ->with('product')
             ->get()
-            ->mapWithKeys(fn(ProductVariant $v) => [$v->id => $v->getOption()])
+            ->mapWithKeys(fn (ProductVariant $v) => [$v->id => $v->getOption()])
             ->all();
     }
 
@@ -151,7 +151,7 @@ class Import extends Component
 
     private function resetImportSection()
     {
-        $this->showCsvImporter = !blank($this->batch->purchasable_id);
+        $this->showCsvImporter = ! blank($this->batch->purchasable_id);
         $this->removeFile();
     }
 
@@ -161,7 +161,7 @@ class Import extends Component
             ->where(['product_id' => $this->productId])
             ->first();
 
-        if (!$virtualProduct) {
+        if (! $virtualProduct) {
             return;
         }
 
@@ -171,7 +171,7 @@ class Import extends Component
 
         $this->columnsToMap = $this->schemaFields
             ->pluck('name')
-            ->mapWithKeys(fn($field) => [$field => ''])
+            ->mapWithKeys(fn ($field) => [$field => ''])
             ->toArray();
     }
 
@@ -188,6 +188,7 @@ class Import extends Component
             $this->fileRowCount = $records->count();
         } catch (\League\Csv\Exception $e) {
             Log::warning($e->getMessage());
+
             return $this->addError(
                 'file',
                 __('The file has error/errors, Please check, and try again')
@@ -231,26 +232,28 @@ class Import extends Component
         }
         $base = log($size) / log(1024);
         $suffixes = ['KB', 'MB', 'GB', 'TB'];
-        return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
+
+        return round(pow(1024, $base - floor($base)), $precision).$suffixes[floor($base)];
     }
 
     public function render()
     {
         return view('lunarphp-virtual-product::livewire.components.code-pool.import', [
-            'fileSize' => $this->formatFileSize(config('lunarphp-virtual-product.code_pool.import.max_upload_size'))
+            'fileSize' => $this->formatFileSize(config('lunarphp-virtual-product.code_pool.import.max_upload_size')),
         ]);
     }
 
     protected function rules()
     {
         $maxUploadSize = config('lunarphp-virtual-product.code_pool.import.max_upload_size');
+
         return [
             'batch.purchasable_id' => 'required|integer',
             'batch.entry_price' => 'nullable|numeric',
             'batch.entry_price_currency_id' => 'nullable|integer',
             'batch.notes' => 'nullable|string',
             'columnsToMap' => 'required|array|min:1',
-            'file' => 'required|file|mimes:csv,txt|max:' . $maxUploadSize,
+            'file' => 'required|file|mimes:csv,txt|max:'.$maxUploadSize,
         ];
     }
 }

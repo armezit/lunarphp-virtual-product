@@ -23,6 +23,6 @@ enum CodePoolFieldType: string
 
     private static function t(self $v)
     {
-        return __('lunarphp-virtual-product::code-pool.field_type.' . $v->value);
+        return __('lunarphp-virtual-product::code-pool.field_type.'.$v->value);
     }
 }

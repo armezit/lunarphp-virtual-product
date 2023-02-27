@@ -105,7 +105,7 @@ class VirtualProductSlot extends Component implements AbstractSlot
 
             if ($virtualProducts->count() > 0) {
                 $enabledSources = $virtualProducts
-                    ->mapWithKeys(fn($vp) => [$vp['source'] => $vp['meta']])
+                    ->mapWithKeys(fn ($vp) => [$vp['source'] => $vp['meta']])
                     ->toArray();
 
                 // enable the virtual-product slot
@@ -114,14 +114,14 @@ class VirtualProductSlot extends Component implements AbstractSlot
         }
 
         // for all other products, mark all sources as enabled but don't enable slot
-        if (!isset($enabledSources)) {
+        if (! isset($enabledSources)) {
             $enabledSources = $this->sourceProviders->toArray();
         }
 
         $this->sources = new ProductSourcesList(
             sources: ProductSource::collection(
                 $this->sourceProviders
-                    ->map(fn(string $sourceProvider) => new ProductSource(
+                    ->map(fn (string $sourceProvider) => new ProductSource(
                         class: $sourceProvider,
                         enabled: array_key_exists($sourceProvider, $enabledSources),
                         meta: $enabledSources[$sourceProvider] ?? []
@@ -134,7 +134,6 @@ class VirtualProductSlot extends Component implements AbstractSlot
     /**
      * Keep source data to be used later on saving slot
      *
-     * @param mixed $payload
      * @return void
      */
     public function onSourceDataUpdated(mixed $payload)
@@ -159,8 +158,8 @@ class VirtualProductSlot extends Component implements AbstractSlot
     }
 
     /**
-     * @param Product $model
-     * @param array $data
+     * @param  Product  $model
+     * @param  array  $data
      * @return \Illuminate\Support\MessageBag|void
      */
     public function handleSlotSave($model, $data)
@@ -174,7 +173,7 @@ class VirtualProductSlot extends Component implements AbstractSlot
 
         $validatedData = $validator->validated();
 
-        if (!isset($validatedData['sources'])) {
+        if (! isset($validatedData['sources'])) {
             return;
         }
 

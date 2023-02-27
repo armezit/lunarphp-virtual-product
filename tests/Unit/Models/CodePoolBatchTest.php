@@ -7,7 +7,6 @@ use Armezit\Lunar\VirtualProduct\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Lunar\Base\Purchasable;
-use Lunar\DataTypes\Price;
 use Lunar\Models\Currency;
 use Lunar\Models\ProductVariant;
 
@@ -16,9 +15,6 @@ class CodePoolBatchTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    /**
-     * @return string
-     */
     private function getCodePoolBatchTable(): string
     {
         return (new CodePoolBatch)->getTable();

@@ -12,8 +12,6 @@ class SchemaShow extends AbstractSchema
 {
     /**
      * Defines the confirmation text when deleting a language.
-     *
-     * @var string|null
      */
     public ?string $deleteConfirm = null;
 
@@ -53,7 +51,7 @@ class SchemaShow extends AbstractSchema
      */
     public function delete()
     {
-        if (!$this->canDelete) {
+        if (! $this->canDelete) {
             return;
         }
 
@@ -67,8 +65,6 @@ class SchemaShow extends AbstractSchema
 
     /**
      * Returns whether we have met the criteria to allow deletion.
-     *
-     * @return bool
      */
     public function getCanDeleteProperty(): bool
     {

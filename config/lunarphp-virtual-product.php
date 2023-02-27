@@ -37,8 +37,8 @@ return [
 
         'import' => [
             'chunk_size' => 10,
-            'max_upload_size' => (int)ini_get('upload_max_filesize') ?: 10240,
-        ]
+            'max_upload_size' => (int) ini_get('upload_max_filesize') ?: 10240,
+        ],
     ],
 
 ];

@@ -17,22 +17,13 @@ class ProductSource extends Data implements Wireable
 
     public ?string $productSettingsComponent;
 
-    /**
-     * @var SourceProvider
-     */
     private SourceProvider $sourceProvider;
 
-    /**
-     * @param string $class
-     * @param bool $enabled
-     * @param array $meta
-     */
     public function __construct(
         public string $class,
-        public bool   $enabled = false,
-        public array  $meta = [],
-    )
-    {
+        public bool $enabled = false,
+        public array $meta = [],
+    ) {
         $this->sourceProvider = app($class);
         $this->name = $this->sourceProvider->getName();
         $this->stock = $this->sourceProvider->getStock();
@@ -40,8 +31,6 @@ class ProductSource extends Data implements Wireable
     }
 
     /**
-     * @param string $name
-     * @param array $arguments
      * @return mixed
      */
     public function __call(string $name, array $arguments)

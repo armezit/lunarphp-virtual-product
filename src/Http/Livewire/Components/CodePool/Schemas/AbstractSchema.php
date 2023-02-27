@@ -6,11 +6,9 @@ use Armezit\Lunar\VirtualProduct\Data\CodePoolSchemaField;
 use Armezit\Lunar\VirtualProduct\Data\CodePoolSchemaFieldsList;
 use Armezit\Lunar\VirtualProduct\Enums\CodePoolFieldType;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
-use Illuminate\Support\Collection;
 use Illuminate\Validation\Rules\Enum;
 use Livewire\Component;
 use Lunar\Hub\Http\Livewire\Traits\Notifies;
-use Spatie\LaravelData\DataCollection;
 
 /**
  * @property-read bool $canModify
@@ -21,15 +19,11 @@ abstract class AbstractSchema extends Component
 
     /**
      * The current schema we're showing.
-     *
-     * @var CodePoolSchema
      */
     public CodePoolSchema $schema;
 
     /**
      * The schema fields.
-     *
-     * @var CodePoolSchemaFieldsList
      */
     public CodePoolSchemaFieldsList $fields;
 
@@ -73,7 +67,6 @@ abstract class AbstractSchema extends Component
     /**
      * Sort schema fields.
      *
-     * @param  array  $columns
      * @return void
      */
     public function sortFields(array $columns)
@@ -97,8 +90,6 @@ abstract class AbstractSchema extends Component
 
     /**
      * Returns whether we can update/delete schema
-     *
-     * @return bool
      */
     public function getCanModifyProperty(): bool
     {

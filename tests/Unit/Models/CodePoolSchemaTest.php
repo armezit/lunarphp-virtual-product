@@ -13,9 +13,6 @@ class CodePoolSchemaTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    /**
-     * @return string
-     */
     private function getCodePoolSchemaTable(): string
     {
         return (new CodePoolSchema)->getTable();

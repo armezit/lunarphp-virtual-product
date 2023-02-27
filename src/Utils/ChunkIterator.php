@@ -16,15 +16,12 @@ class ChunkIterator
 {
     public function __construct(
         protected Iterator $iterator,
-        protected int      $chunkSize
-    )
-    {
+        protected int $chunkSize
+    ) {
     }
 
     /**
      * Chunk the given data
-     *
-     * @return Generator
      */
     public function get(): Generator
     {
