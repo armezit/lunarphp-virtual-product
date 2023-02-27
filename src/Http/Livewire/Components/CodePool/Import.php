@@ -75,7 +75,7 @@ class Import extends Component
         }
 
         $this->batch = new CodePoolBatch();
-        $this->batch->purchasable_id = (int)$this->productVariantId;
+        $this->batch->purchasable_id = (int) $this->productVariantId;
 
         $this->initCurrencies();
         $this->setSchemaFields();
@@ -214,7 +214,7 @@ class Import extends Component
         $staff = Auth::guard('staff')->user();
 
         $this->batch->purchasable_type = ProductVariant::class;
-        $this->batch->purchasable_id = (int)$this->productVariantId;
+        $this->batch->purchasable_id = (int) $this->productVariantId;
         $this->batch->staff_id = $staff->id;
         $this->batch->entry_price_currency_id = $this->defaultCurrencyId;
         $this->batch->status = CodePoolBatchStatus::Running->value;
