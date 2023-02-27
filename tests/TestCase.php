@@ -3,15 +3,21 @@
 namespace Armezit\Lunar\VirtualProduct\Tests;
 
 use Armezit\Lunar\VirtualProduct\Tests\Concerns\FixesSqliteDropForeign;
+use Armezit\Lunar\VirtualProduct\VirtualProductHubServiceProvider;
 use Armezit\Lunar\VirtualProduct\VirtualProductServiceProvider;
 use Cartalyst\Converter\Laravel\ConverterServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Config;
 use Kalnoy\Nestedset\NestedSetServiceProvider;
+use Livewire\LivewireServiceProvider;
+use Lunar\Hub\AdminHubServiceProvider;
+use Lunar\LivewireTables\LivewireTablesServiceProvider;
 use Lunar\LunarServiceProvider;
 use Lunar\Models\Language;
 use Lunar\Tests\Stubs\User;
 use Spatie\Activitylog\ActivitylogServiceProvider;
+use Spatie\LaravelBlink\BlinkServiceProvider;
+use Spatie\LaravelData\LaravelDataServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -48,11 +54,17 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         return [
             LunarServiceProvider::class,
-            MediaLibraryServiceProvider::class,
+            LivewireServiceProvider::class,
+            LivewireTablesServiceProvider::class,
+            AdminHubServiceProvider::class,
             ActivitylogServiceProvider::class,
+            MediaLibraryServiceProvider::class,
             ConverterServiceProvider::class,
             NestedSetServiceProvider::class,
+            BlinkServiceProvider::class,
+            LaravelDataServiceProvider::class,
             VirtualProductServiceProvider::class,
+            VirtualProductHubServiceProvider::class,
         ];
     }
 
