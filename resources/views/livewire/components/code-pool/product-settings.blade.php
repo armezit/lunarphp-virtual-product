@@ -1,27 +1,22 @@
-<div>
+<div class="space-y-4">
     <div class="space-y-2">
-        <div class="flex items-center justify-between space-x-2 rtl:space-x-reverse">
-            <label class="inline-flex items-center space-x-3 rtl:space-x-reverse">
-                <span class="text-sm font-medium leading-4 text-gray-700 dark:text-gray-300">
-                    {{ __('lunarphp-virtual-product::code-pool.product-settings.schema.label') }}
-                </span>
-                <span class="text-xs text-gray-500">
-                    ({{ __('lunarphp-virtual-product::code-pool.product-settings.schema.strapline') }})
-                </span>
-            </label>
-        </div>
-
-        <x-hub::input.group label="" for="schema">
-            @include($listField['view'], ['field' => $listField])
+        <x-hub::input.group label="{{ __('lunarphp-virtual-product::code-pool.product-settings.schema.label') }}"
+                            for="schemaId">
+            <x-hub::input.select wire:model="schemaId">
+                <option value readonly>
+                    {{ __('adminhub::fieldtypes.dropdown.empty_selection') }}
+                </option>
+                @foreach($this->schemas as $s)
+                    <option value="{{ $s->id }}" @if($s->id == $this->schemaId) selected @endif>{{ $s->name }}</option>
+                @endforeach
+            </x-hub::input.select>
         </x-hub::input.group>
     </div>
-
-    <hr class="my-6 mx-auto w-48 h-1 bg-gray-100 rounded border-0 dark:bg-gray-700" />
 
     <div>
         <x-hub::button
             tag="a"
-            href="{{ route('hub.virtual-product.code-pool.import') }}"
+            href="{{ route('hub.virtual-products.code-pool.import', ['pid' => $this->product->id]) }}"
             class="space-x-2 rtl:space-x-reverse"
         >
             <x-hub::icon ref="cloud-upload" class="w-4"/>

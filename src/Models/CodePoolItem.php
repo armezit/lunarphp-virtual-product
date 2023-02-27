@@ -3,10 +3,18 @@
 namespace Armezit\Lunar\VirtualProduct\Models;
 
 use Armezit\Lunar\VirtualProduct\Database\Factories\CodePoolItemFactory;
+use Illuminate\Database\Eloquent\Casts\ArrayObject;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $batch_id
+ * @property int $schema_id
+ * @property ArrayObject $data
+ * @property-read CodePoolBatch $batch
+ * @property-read CodePoolSchema $schema
+ */
 class CodePoolItem extends Model
 {
     use HasFactory;
@@ -17,6 +25,8 @@ class CodePoolItem extends Model
     protected $casts = [
         'data' => AsArrayObject::class,
     ];
+
+    protected $guarded = [];
 
     /**
      * Get the table associated with the model.
@@ -41,8 +51,16 @@ class CodePoolItem extends Model
     /**
      * Get the code pool batch that owns the item.
      */
-    public function codePoolBatch()
+    public function batch()
     {
         return $this->belongsTo(CodePoolBatch::class, 'batch_id');
+    }
+
+    /**
+     * Get the code pool batch that owns the item.
+     */
+    public function schema()
+    {
+        return $this->belongsTo(CodePoolSchema::class, 'schema_id');
     }
 }

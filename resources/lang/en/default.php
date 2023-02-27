@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'virtual-product' => 'Virtual product',
     'source.enabled_tooltip' => 'Enable/disable this source for the current product.',
     'source.stock' => 'Stock',
 

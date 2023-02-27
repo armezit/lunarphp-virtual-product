@@ -16,14 +16,10 @@ class CodePoolItemFactory extends Factory
      */
     public function definition()
     {
-        $data = [
-            'name' => $this->faker->word(),
-            'value' => $this->faker->numberBetween(1000),
-        ];
-
         return [
-            'batch_id' => 1,
-            'data' => $data,
+            'batch_id' => $this->faker->numberBetween(1, 1000),
+            'schema_id' => $this->faker->numberBetween(1, 1000),
+            'data' => [],
         ];
     }
 }

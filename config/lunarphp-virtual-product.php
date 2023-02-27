@@ -3,7 +3,7 @@
 return [
 
     'sources' => [
-        \Armezit\Lunar\VirtualProduct\Sources\CodePool::class,
+        \Armezit\Lunar\VirtualProduct\SourceProviders\CodePool::class,
     ],
 
     /*
@@ -34,6 +34,11 @@ return [
         'items_table' => 'virtual_products_code_pool_items',
         'archive_table' => 'virtual_products_code_pool_archive',
         'batches_table' => 'virtual_products_code_pool_batches',
+
+        'import' => [
+            'chunk_size' => 10,
+            'max_upload_size' => (int)ini_get('upload_max_filesize') ?: 10240,
+        ]
     ],
 
 ];

@@ -2,9 +2,9 @@
 
 namespace Armezit\Lunar\VirtualProduct\Database\Factories;
 
+use Armezit\Lunar\VirtualProduct\Enums\CodePoolFieldType;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class CodePoolSchemaFactory extends Factory
 {
@@ -17,18 +17,18 @@ class CodePoolSchemaFactory extends Factory
      */
     public function definition()
     {
-        $schema = [];
+        $fields = [];
         for ($i = 0; $i < $this->faker->numberBetween(1, 5); $i++) {
-            $name = $this->faker->word();
-            $schema[] = [
-                'name' => $name,
-                'label' => Str::camel($name),
+            $fields[] = [
+                'name' => $this->faker->word,
+                'type' => CodePoolFieldType::Raw->value,
+                'order' => $i,
             ];
         }
 
         return [
-            'product_id' => 1,
-            'schema' => $schema,
+            'name' => $this->faker->word,
+            'fields' => $fields,
         ];
     }
 }

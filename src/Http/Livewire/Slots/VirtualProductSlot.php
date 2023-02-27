@@ -3,9 +3,9 @@
 namespace Armezit\Lunar\VirtualProduct\Http\Livewire\Slots;
 
 use Armezit\Lunar\VirtualProduct\Contracts\SourceProvider;
+use Armezit\Lunar\VirtualProduct\Data\ProductSource;
+use Armezit\Lunar\VirtualProduct\Data\ProductSourcesList;
 use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
-use Armezit\Lunar\VirtualProduct\Values\ProductSources;
-use Armezit\Lunar\VirtualProduct\Values\Source;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -16,26 +16,16 @@ use Lunar\Hub\Slots\AbstractSlot;
 use Lunar\Hub\Slots\Traits\HubSlot;
 use Lunar\Models\Product;
 
+/**
+ * @property-read Collection $sourceProviders
+ */
 class VirtualProductSlot extends Component implements AbstractSlot
 {
     use HubSlot;
 
-    /**
-     * @var bool
-     */
     public bool $enabled = false;
 
-    /**
-     * @var ProductSources
-     */
-    public ProductSources $sources;
-
-    /**
-     * source provider class names
-     *
-     * @var Collection
-     */
-    private Collection $sourceProviders;
+    public ProductSourcesList $sources;
 
     public static function getName()
     {
@@ -74,15 +64,13 @@ class VirtualProductSlot extends Component implements AbstractSlot
             'sources.*.enabled' => 'nullable|boolean',
             'sources.*.class' => [
                 'required_if:sources.*.enabled,1',
-                Rule::in($this->getSourceProviders()),
+                Rule::in($this->sourceProviders),
             ],
-            'sources.*.data' => [
+            'sources.*.meta' => [
                 'required_if:sources.*.enabled,1',
                 'bail',
                 'array',
-                'min:1',
             ],
-            'sources.*.data.*' => 'string|distinct|min:1',
         ];
     }
 
@@ -98,68 +86,60 @@ class VirtualProductSlot extends Component implements AbstractSlot
         $this->initSources();
     }
 
-    public function getSourceProviders(): Collection
+    public function getSourceProvidersProperty(): Collection
     {
-        if (! isset($this->sourceProviders)) {
-            $this->sourceProviders = collect(config('lunarphp-virtual-product.sources', []));
-        }
-
-        return $this->sourceProviders;
+        return collect(config('lunarphp-virtual-product.sources', []));
     }
 
     /**
      * Init Source provider instances
-     *
-     * @return ProductSources
      */
-    private function initSources(): ProductSources
+    private function initSources()
     {
         // for existing products, read their enabled sources from db.
         // if no virtual product exists for the current product (either new or existing product),
         // enable all sources by default
 
         if ($this->slotModel && $this->slotModel->exists) {
-            $virtualProduct = VirtualProduct::firstOrNew(['product_id' => $this->slotModel->id]);
+            $virtualProducts = VirtualProduct::where('product_id', $this->slotModel->id)->get();
 
-            if (! blank($virtualProduct->sources)) {
-                $enabledSources = $virtualProduct->sources->toArray();
+            if ($virtualProducts->count() > 0) {
+                $enabledSources = $virtualProducts
+                    ->mapWithKeys(fn($vp) => [$vp['source'] => $vp['meta']])
+                    ->toArray();
 
-                // if existing product has virtual-product sources, enable the whole slot
-                if (count($enabledSources) > 0) {
-                    $this->enabled = true;
-                }
+                // enable the virtual-product slot
+                $this->enabled = true;
             }
         }
 
         // for all other products, mark all sources as enabled but don't enable slot
-        if (! isset($enabledSources)) {
-            $enabledSources = $this->getSourceProviders()->toArray();
+        if (!isset($enabledSources)) {
+            $enabledSources = $this->sourceProviders->toArray();
         }
 
-        $this->sources = new ProductSources(
-            sources: $this->getSourceProviders()
-                ->map(fn (string $sourceProvider) => new Source(
-                    $sourceProvider,
-                    in_array($sourceProvider, $enabledSources, true)),
-                )
-                ->toArray(),
+        $this->sources = new ProductSourcesList(
+            sources: ProductSource::collection(
+                $this->sourceProviders
+                    ->map(fn(string $sourceProvider) => new ProductSource(
+                        class: $sourceProvider,
+                        enabled: array_key_exists($sourceProvider, $enabledSources),
+                        meta: $enabledSources[$sourceProvider] ?? []
+                    ))
+                    ->all()
+            )
         );
-
-        return $this->sources;
     }
 
     /**
      * Keep source data to be used later on saving slot
      *
-     * @param  mixed  $payload
+     * @param mixed $payload
      * @return void
      */
     public function onSourceDataUpdated(mixed $payload)
     {
-        $sourceClass = $payload['source'];
-        $sourceData = $payload['data'];
-        $this->sources->setSourceData($sourceClass, $sourceData);
-
+        $this->sources->sourceMeta($payload['source'], $payload['data']);
         $this->updateSlotData();
     }
 
@@ -178,13 +158,9 @@ class VirtualProductSlot extends Component implements AbstractSlot
         }
     }
 
-    public function updateSlotModel()
-    {
-    }
-
     /**
-     * @param  Product  $model
-     * @param  array  $data
+     * @param Product $model
+     * @param array $data
      * @return \Illuminate\Support\MessageBag|void
      */
     public function handleSlotSave($model, $data)
@@ -198,25 +174,37 @@ class VirtualProductSlot extends Component implements AbstractSlot
 
         $validatedData = $validator->validated();
 
-        if (! isset($validatedData['sources'])) {
+        if (!isset($validatedData['sources'])) {
             return;
         }
 
         DB::transaction(function () use ($validatedData, $model) {
-            $enabledSources = collect($validatedData['sources'])->whereStrict('enabled', true);
+            $enabledSources = collect($validatedData['sources'])->where('enabled', true);
 
-            // save each source provider data
-            foreach ($enabledSources as $payload) {
+            // save enabled source provider(s)
+            foreach ($enabledSources as $source) {
                 /** @var SourceProvider $sourceProvider */
-                $sourceProvider = app($payload['class']);
-                $sourceProvider->saveProductSettings($model, $payload['data']);
+                $sourceProvider = app($source['class']);
+                $sourceProvider->onProductSave($model, $source['meta']);
+
+                // save virtual product for the enabled source
+                $virtualProduct = VirtualProduct::where([
+                    'product_id' => $model->id,
+                    'source' => $source['class'],
+                ])->firstOrNew();
+
+                $virtualProduct->product_id = $model->id;
+                $virtualProduct->source = $source['class'];
+                $virtualProduct->meta = $source['meta'];
+
+                $virtualProduct->save();
             }
 
-            // save product enabled sources
-            $virtualProduct = VirtualProduct::where(['product_id' => $model->id])->firstOrNew();
-            $virtualProduct->product_id = $model->id;
-            $virtualProduct->sources = $enabledSources->pluck(['class'])->toArray();
-            $virtualProduct->save();
+            // delete disabled source provider(s)
+            $disabledSources = $this->sourceProviders->diff($enabledSources->pluck('class'));
+            VirtualProduct::where('product_id', $model->id)
+                ->whereIn('source', $disabledSources)
+                ->delete();
         });
     }
 }

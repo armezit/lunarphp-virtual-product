@@ -17,10 +17,13 @@ return new class extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
             $table->morphs('purchasable');
+            $table->foreignId('staff_id')->index();
+            $table->string('status')->index();
             $table->integer('entry_price')->unsigned()->nullable();
-            $table->bigInteger('entry_price_currency_id')->unsigned();
+            $table->bigInteger('entry_price_currency_id')->unsigned()->nullable();
             $table->text('notes')->nullable();
-            $table->timestamp('created_at');
+            $table->json('meta')->nullable();
+            $table->timestamps();
         });
     }
 

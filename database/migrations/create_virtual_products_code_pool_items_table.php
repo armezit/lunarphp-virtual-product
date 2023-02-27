@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
             $table->bigInteger('batch_id')->unsigned()->index();
+            $table->bigInteger('schema_id')->unsigned()->index();
             $table->json('data');
             $table->timestamps();
         });

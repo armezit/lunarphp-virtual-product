@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'virtual-product' => 'کالای مجازی',
     'source.enabled_tooltip' => 'این منبع را برای کالای کنونی فعال/غیرفعال کنید.',
     'source.stock' => 'موجودی',
 

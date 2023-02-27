@@ -18,11 +18,12 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "illuminate/contracts": "^9.0",
+        "league/csv": "^9.8.0",
         "livewire/livewire": "^2.0",
-        "lunarphp/lunar": "^0.1",
-        "spatie/data-transfer-object": "^3.8",
+        "lunarphp/lunar": "^0.2",
+        "spatie/laravel-data": "^3.0.0",
         "spatie/laravel-package-tools": "^1.9.2"
     },
     "require-dev": {

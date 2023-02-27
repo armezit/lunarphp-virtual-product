@@ -16,9 +16,11 @@ return new class extends Migration
         $tableName = config('lunarphp-virtual-product.virtual_products_table');
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('product_id')->unsigned()->unique();
-            $table->json('sources')->nullable();
+            $table->bigInteger('product_id')->unsigned();
+            $table->string('source');
+            $table->json('meta')->nullable();
             $table->timestamps();
+            $table->unique(['product_id', 'source']);
         });
     }
 

@@ -30,5 +30,5 @@ interface SourceProvider
      * @param  array  $data
      * @return void
      */
-    public function saveProductSettings(Product $product, array $data): void;
+    public function onProductSave(Product $product, array $data): void;
 }

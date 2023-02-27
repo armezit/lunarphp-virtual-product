@@ -17,7 +17,7 @@
              class="space-y-2">
             @forelse($sources as $index => $source)
                 <div wire:key="source_{{ $source->name }}"
-                     x-data="{ expanded: {{ $source->getProductSettingsComponent() ? 'true' : 'false' }} }"
+                     x-data="{ expanded: {{ $source->productSettingsComponent ? 'true' : 'false' }} }"
                      sort.item="sources"
                      sort.id="{{ $source->class }}">
                     <div class="flex items-center">
@@ -57,7 +57,7 @@
                                     </span>
                                 </label>
                                 @endif
-                                @if ($source->getProductSettingsComponent())
+                                @if ($source->productSettingsComponent)
                                     <button @click="expanded = !expanded">
                                         <div class="transition-transform"
                                              :class="{
@@ -73,8 +73,8 @@
                     </div>
                     <div class="py-4 pl-2 pr-4 mt-2 ml-8 space-y-2 rounded rtl:pl-4 rtl:pr-2 rtl:ml-0 rtl:mr-8"
                          x-show="expanded">
-                        @if ($source->getProductSettingsComponent())
-                            @livewire($source->getProductSettingsComponent(), [
+                        @if ($source->productSettingsComponent)
+                            @livewire($source->productSettingsComponent, [
                                 'product' => $this->slotModel,
                             ])
                         @endif

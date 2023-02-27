@@ -16,10 +16,9 @@ return new class extends Migration
         $tableName = config('lunarphp-virtual-product.code_pool.schema_table');
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('product_id')->unsigned()->unique();
-            $table->json('schema');
+            $table->text('name')->unique();
+            $table->json('fields');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

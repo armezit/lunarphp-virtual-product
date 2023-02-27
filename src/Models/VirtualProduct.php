@@ -3,12 +3,22 @@
 namespace Armezit\Lunar\VirtualProduct\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\ArrayObject;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Lunar\Models\Product;
 
+/**
+ * @property int product_id
+ * @property string $source
+ * @property ArrayObject $meta
+ * @property-read Product $product
+ */
 class VirtualProduct extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -16,13 +26,15 @@ class VirtualProduct extends Model
      */
     protected $fillable = [
         'product_id',
+        'source',
+        'meta',
     ];
 
     /**
      * @var array
      */
     protected $casts = [
-        'sources' => AsArrayObject::class,
+        'meta' => AsArrayObject::class,
     ];
 
     /**
@@ -38,15 +50,12 @@ class VirtualProduct extends Model
     /**
      * Scope a query to only include virtual products which have CodePool source
      *
-     * @param  Builder  $query
+     * @param Builder $query
      * @return Builder
      */
     public function scopeOnlyCodePool(Builder $query): Builder
     {
-        return $query->whereJsonContains(
-            'sources',
-            \Armezit\Lunar\VirtualProduct\Sources\CodePool::class
-        );
+        return $query->whereSource(\Armezit\Lunar\VirtualProduct\SourceProviders\CodePool::class);
     }
 
     /**

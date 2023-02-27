@@ -17,9 +17,10 @@ return new class extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
             $table->bigInteger('batch_id')->unsigned()->index();
+            $table->bigInteger('schema_id')->unsigned()->index();
             $table->bigInteger('order_line_id')->unsigned()->nullable()->index();
             $table->json('data');
-            $table->timestamp('created_at');
+            $table->timestamps();
         });
     }
 

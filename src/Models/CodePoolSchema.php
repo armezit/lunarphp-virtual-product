@@ -3,22 +3,24 @@
 namespace Armezit\Lunar\VirtualProduct\Models;
 
 use Armezit\Lunar\VirtualProduct\Database\Factories\CodePoolSchemaFactory;
-use Illuminate\Database\Eloquent\Casts\AsArrayObject;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Lunar\Models\Product;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property array $fields
+ */
 class CodePoolSchema extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     /**
      * @var array
      */
     protected $casts = [
-        'schema' => AsArrayObject::class,
+        'fields' => AsCollection::class,
     ];
 
     /**
@@ -42,10 +44,18 @@ class CodePoolSchema extends Model
     }
 
     /**
-     * Get the product that owns the item.
+     * Get schema items.
      */
-    public function product()
+    public function items()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->hasMany(CodePoolItem::class, 'schema_id', 'id');
+    }
+
+    /**
+     * Get schema archived items.
+     */
+    public function archivedItems()
+    {
+        return $this->hasMany(CodePoolArchive::class, 'schema_id', 'id');
     }
 }

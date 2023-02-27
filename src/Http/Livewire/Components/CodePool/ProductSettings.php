@@ -3,85 +3,52 @@
 namespace Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool;
 
 use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
-use Armezit\Lunar\VirtualProduct\Sources\CodePool;
+use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
+use Armezit\Lunar\VirtualProduct\SourceProviders\CodePool;
 use Livewire\Component;
-use Lunar\FieldTypes\ListField;
 use Lunar\Models\Product;
 
 class ProductSettings extends Component
 {
-    /**
-     * @var Product|null
-     */
-    public ?Product $product;
+    public Product $product;
 
-    /**
-     * @var array
-     */
-    public array $schema;
-
-    /**
-     * @var array
-     */
-    private array $listField;
+    public ?string $schemaId;
 
     protected function rules()
     {
         return [
-            'schema' => 'required|array|min:1',
-            'schema.*' => 'required|string|distinct',
+            'schema' => 'required',
         ];
     }
 
     public function mount()
     {
         $this->initSchema();
-        self::initListField();
-    }
-
-    public function hydrate()
-    {
-        self::initListField();
     }
 
     private function initSchema()
     {
-        if ($this->product === null || ! $this->product->exists) {
-            $this->schema = [];
-
-            return;
-        }
-
-        $this->schema = CodePoolSchema::query()
+        $virtualProduct = VirtualProduct::onlyCodePool()
             ->where(['product_id' => $this->product->id])
-            ->select('schema')
-            ->get()
-            ->pluck('schema')
-            ->toArray();
+            ->first();
+        $this->schemaId = $virtualProduct?->meta['schemaId'];
     }
 
-    private function initListField()
+    public function getSchemasProperty()
     {
-        $this->listField = [
-            'id' => 'schema',
-            'signature' => 'schema',
-            'type' => ListField::class,
-            'view' => app()->make(ListField::class)->getView(),
-        ];
+        return CodePoolSchema::get();
     }
 
     public function render()
     {
-        return view('lunarphp-virtual-product::livewire.components.code-pool.product-settings', [
-            'listField' => $this->listField,
-        ]);
+        return view('lunarphp-virtual-product::livewire.components.code-pool.product-settings');
     }
 
     public function updated(string $prop, mixed $data)
     {
         $this->emitTo('hub.lunarphp-virtual-product.slots.virtual-product-slot', 'sourceUpdated', [
             'source' => CodePool::class,
-            'data' => $data,
+            'data' => [$prop => $data],
         ]);
     }
 }

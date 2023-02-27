@@ -1,9 +1,8 @@
 <?php
 
-namespace Armezit\Lunar\VirtualProduct\Sources;
+namespace Armezit\Lunar\VirtualProduct\SourceProviders;
 
 use Armezit\Lunar\VirtualProduct\Contracts\SourceProvider;
-use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
 use Lunar\Models\Product;
 
 class CodePool implements SourceProvider
@@ -24,11 +23,7 @@ class CodePool implements SourceProvider
         return 'hub.lunarphp-virtual-product.components.code_pool.product-settings';
     }
 
-    public function saveProductSettings(Product $product, array $data): void
+    public function onProductSave(Product $product, array $data): void
     {
-        $codePoolSchema = CodePoolSchema::where(['product_id' => $product->id])->firstOrNew();
-        $codePoolSchema->product_id = $product->id;
-        $codePoolSchema->schema = $data;
-        $codePoolSchema->save();
     }
 }
