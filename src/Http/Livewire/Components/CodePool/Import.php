@@ -112,7 +112,7 @@ class Import extends Component
      */
     public function getProductVariantsProperty(): array
     {
-        if (blank($this->productId)) {
+        if ((int)$this->productId <= 0) {
             return [];
         }
 
@@ -152,7 +152,7 @@ class Import extends Component
 
     private function resetImportSection()
     {
-        $this->showCsvImporter = ! blank($this->batch->purchasable_id);
+        $this->showCsvImporter = $this->batch->purchasable_id > 0;
         $this->removeFile();
     }
 
