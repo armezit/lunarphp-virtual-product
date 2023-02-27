@@ -36,7 +36,7 @@ class CodePoolBatch extends Model
     use HasFactory;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'meta' => AsArrayObject::class,
@@ -55,7 +55,7 @@ class CodePoolBatch extends Model
      * Define which attributes should be
      * protected from mass assignment.
      *
-     * @var array
+     * @var array<string>|bool
      */
     protected $guarded = [];
 

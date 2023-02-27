@@ -23,7 +23,7 @@ class CodePoolArchive extends Model
     use HasFactory;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'data' => AsArrayObject::class,

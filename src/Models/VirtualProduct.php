@@ -2,15 +2,17 @@
 
 namespace Armezit\Lunar\VirtualProduct\Models;
 
+use Armezit\Lunar\VirtualProduct\SourceProviders\CodePool;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\ArrayObject;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Lunar\Models\Product;
 
 /**
- * @property int product_id
+ * @property int $product_id
  * @property string $source
  * @property ArrayObject $meta
  * @property-read Product $product
@@ -31,7 +33,7 @@ class VirtualProduct extends Model
     ];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'meta' => AsArrayObject::class,
@@ -52,13 +54,13 @@ class VirtualProduct extends Model
      */
     public function scopeOnlyCodePool(Builder $query): Builder
     {
-        return $query->whereSource(\Armezit\Lunar\VirtualProduct\SourceProviders\CodePool::class);
+        return $query->where('source', CodePool::class);
     }
 
     /**
      * Get the product that owns the item.
      */
-    public function product()
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'product_id');
     }

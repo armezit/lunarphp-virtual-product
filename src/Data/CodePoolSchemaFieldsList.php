@@ -16,7 +16,7 @@ class CodePoolSchemaFieldsList extends Data implements Wireable, Countable, Arra
     /**
      * @param  DataCollection<CodePoolSchemaField>  $fields
      */
-    public function __construct(
+    final public function __construct(
         #[DataCollectionOf(CodePoolSchemaField::class)]
         public DataCollection $fields,
     ) {

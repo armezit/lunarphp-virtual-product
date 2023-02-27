@@ -6,18 +6,21 @@ use Armezit\Lunar\VirtualProduct\Database\Factories\CodePoolSchemaFactory;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use Lunar\Base\Traits\Searchable;
 
 /**
  * @property int $id
  * @property string $name
- * @property array $fields
+ * @property Collection $fields
  */
 class CodePoolSchema extends Model
 {
     use HasFactory;
+    use Searchable;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'fields' => AsCollection::class,

@@ -69,11 +69,11 @@ abstract class AbstractSchema extends Component
      *
      * @return void
      */
-    public function sortFields(array $columns)
+    public function sortFields(array $fields)
     {
-        $cols = collect();
+        $sortedFields = collect();
 
-        $items = collect($columns['items']);
+        $items = collect($fields['items']);
 
         foreach ($this->fields as $value) {
             // Get the new position
@@ -82,10 +82,12 @@ abstract class AbstractSchema extends Component
             );
 
             $value->order = $item['order'];
-            $cols->push($value);
+            $sortedFields->push($value);
         }
 
-        $this->fields = $cols->sortBy('order')->values()->toArray();
+        $this->fields = new CodePoolSchemaFieldsList(
+            fields: CodePoolSchemaField::collection($sortedFields->sortBy('order')->values()->toArray())
+        );
     }
 
     /**

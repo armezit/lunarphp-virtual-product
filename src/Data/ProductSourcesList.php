@@ -15,7 +15,7 @@ class ProductSourcesList extends Data implements Wireable, ArrayAccess, Iterator
     /**
      * @param  DataCollection<ProductSource>  $sources
      */
-    public function __construct(
+    final public function __construct(
         #[DataCollectionOf(ProductSource::class)]
         public DataCollection $sources,
     ) {

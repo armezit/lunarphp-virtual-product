@@ -15,6 +15,7 @@ use League\Csv\Statement;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Lunar\Hub\Http\Livewire\Traits\Notifies;
+use Lunar\Hub\Models\Staff;
 use Lunar\Models\Currency;
 use Lunar\Models\ProductVariant;
 
@@ -74,7 +75,7 @@ class Import extends Component
         }
 
         $this->batch = new CodePoolBatch();
-        $this->batch->purchasable_id = $this->productVariantId;
+        $this->batch->purchasable_id = (int)$this->productVariantId;
 
         $this->initCurrencies();
         $this->setSchemaFields();
@@ -124,7 +125,7 @@ class Import extends Component
 
     public function updatedProductId()
     {
-        $this->batch->purchasable_id = null;
+        $this->batch->purchasable_id = 0;
         $this->setSchemaFields();
         $this->resetImportSection();
     }
@@ -209,14 +210,16 @@ class Import extends Component
 
     protected function importCsv()
     {
+        /** @var Staff $staff */
+        $staff = Auth::guard('staff')->user();
+
         $this->batch->purchasable_type = ProductVariant::class;
-        $this->batch->purchasable_id = $this->productVariantId;
-        $this->batch->staff_id = Auth::guard('staff')->user()->id;
+        $this->batch->purchasable_id = (int)$this->productVariantId;
+        $this->batch->staff_id = $staff->id;
         $this->batch->entry_price_currency_id = $this->defaultCurrencyId;
         $this->batch->status = CodePoolBatchStatus::Running->value;
         $this->batch->save();
 
-        // array_combine($this->columnsToMap, )
         ImportCodePoolDataFromCsvFile::dispatch(
             $this->batch,
             $this->schema,

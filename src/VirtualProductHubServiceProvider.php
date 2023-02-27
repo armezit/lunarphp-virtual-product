@@ -60,8 +60,10 @@ class VirtualProductHubServiceProvider extends ServiceProvider
 
     protected function registerMenu()
     {
-        $catalogueGroup = Menu::slot('sidebar')
-            ->group('hub.catalogue');
+        /** @var \Lunar\Hub\Menu\MenuSlot $sidebarSlot */
+        $sidebarSlot = Menu::slot('sidebar');
+
+        $catalogueGroup = $sidebarSlot->group('hub.catalogue');
 
         $virtualProductGroup = $catalogueGroup
             ->section('hub.virtual-products')

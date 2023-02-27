@@ -6,9 +6,14 @@ use Armezit\Lunar\VirtualProduct\Tables\Builders\CodePoolSchemasTableBuilder;
 use Illuminate\Support\Collection;
 use Lunar\Hub\Http\Livewire\Traits\Notifies;
 use Lunar\Hub\Models\SavedSearch;
+use Lunar\Hub\Models\Staff;
 use Lunar\LivewireTables\Components\Columns\TextColumn;
 use Lunar\LivewireTables\Components\Table;
 
+/**
+ * @property-read CodePoolSchemasTableBuilder $tableBuilder
+ * @property-read Collection<SavedSearch> $savedSearches
+ */
 class SchemasTable extends Table
 {
     use Notifies;
@@ -79,12 +84,16 @@ class SchemasTable extends Table
             'savedSearchName' => 'required',
         ]);
 
-        auth()->getUser()->savedSearches()->create([
-            'name' => $this->savedSearchName,
-            'term' => $this->query,
-            'component' => $this->getName(),
-            'filters' => $this->filters,
-        ]);
+        /** @var Staff $staff */
+        $staff = auth()->getUser();
+
+        $staff->savedSearches()
+            ->create([
+                'name' => $this->savedSearchName,
+                'term' => $this->query,
+                'component' => $this->getName(),
+                'filters' => $this->filters,
+            ]);
 
         $this->notify('Search saved');
 
@@ -98,16 +107,20 @@ class SchemasTable extends Table
      */
     public function getSavedSearchesProperty(): Collection
     {
-        return auth()->getUser()->savedSearches()->whereComponent(
-            $this->getName()
-        )->get()->map(function ($savedSearch) {
-            return [
-                'key' => $savedSearch->id,
-                'label' => $savedSearch->name,
-                'filters' => $savedSearch->filters,
-                'query' => $savedSearch->term,
-            ];
-        });
+        /** @var Staff $staff */
+        $staff = auth()->getUser();
+
+        return $staff->savedSearches()
+            ->where('component', $this->getName())
+            ->get()
+            ->map(function ($savedSearch) {
+                return [
+                    'key' => $savedSearch->id,
+                    'label' => $savedSearch->name,
+                    'filters' => $savedSearch->filters,
+                    'query' => $savedSearch->term,
+                ];
+            });
     }
 
     /**

@@ -6,6 +6,7 @@ use Armezit\Lunar\VirtualProduct\Contracts\SourceProvider;
 use Armezit\Lunar\VirtualProduct\Data\ProductSource;
 use Armezit\Lunar\VirtualProduct\Data\ProductSourcesList;
 use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -17,6 +18,7 @@ use Lunar\Hub\Slots\Traits\HubSlot;
 use Lunar\Models\Product;
 
 /**
+ * @property Model|null $slotModel
  * @property-read Collection $sourceProviders
  */
 class VirtualProductSlot extends Component implements AbstractSlot
@@ -101,7 +103,7 @@ class VirtualProductSlot extends Component implements AbstractSlot
         // enable all sources by default
 
         if ($this->slotModel && $this->slotModel->exists) {
-            $virtualProducts = VirtualProduct::where('product_id', $this->slotModel->id)->get();
+            $virtualProducts = VirtualProduct::where('product_id', $this->slotModel->getKey())->get();
 
             if ($virtualProducts->count() > 0) {
                 $enabledSources = $virtualProducts

@@ -26,7 +26,7 @@ class SchemaCreate extends AbstractSchema
     {
         $this->validate();
 
-        $this->schema->fields = $this->fields;
+        $this->schema->fields = collect($this->fields);
         $this->schema->save();
 
         $this->notify(
