@@ -76,7 +76,7 @@
                         @if ($source->productSettingsComponent)
                             @livewire($source->productSettingsComponent, [
                                 'product' => $this->slotModel,
-                            ])
+                            ], key($source->name))
                         @endif
                     </div>
                 </div>
