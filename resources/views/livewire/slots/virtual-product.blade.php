@@ -14,12 +14,14 @@
         @if($enabled)
         <div wire:sort
              sort.options='{source: "source", method: "sortSources"}'
-             class="space-y-2">
+             class="divide-y-4 divide-gray-100">
             @forelse($sources as $index => $source)
                 <div wire:key="source_{{ $source->name }}"
                      x-data="{ expanded: {{ $source->productSettingsComponent ? 'true' : 'false' }} }"
                      sort.item="sources"
-                     sort.id="{{ $source->class }}">
+                     sort.id="{{ $source->class }}"
+                     class="py-4"
+                >
                     <div class="flex items-center">
                         <div wire:loading
                              wire:target="sort">
