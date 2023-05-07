@@ -17,7 +17,6 @@
              class="divide-y-4 divide-gray-100">
             @forelse($sources as $index => $source)
                 <div wire:key="source_{{ $source->name }}"
-                     x-data="{ expanded: {{ $source->productSettingsComponent ? 'true' : 'false' }} }"
                      sort.item="sources"
                      sort.id="{{ $source->class }}"
                      class="py-4"
@@ -41,7 +40,7 @@
                         </div>
 
                         <div
-                            class="flex items-center justify-between w-full p-3 text-sm bg-white border border-transparent rounded shadow-sm sort-item-element hover:border-gray-300">
+                            class="flex items-center justify-between w-full p-3 text-sm bg-white sort-item-element">
                             <div class="flex items-center justify-between gap-4 expand">
                                 <div>
                                     <input type="hidden" value="{{ $source->class }}" wire:model='sources.{{ $index }}.class'/>
@@ -59,22 +58,15 @@
                                     </span>
                                 </label>
                                 @endif
-                                @if ($source->productSettingsComponent)
-                                    <button @click="expanded = !expanded">
-                                        <div class="transition-transform"
-                                             :class="{
-                                                         '-rotate-90 ': expanded
-                                                     }">
-                                            <x-hub::icon ref="chevron-left"
-                                                         style="solid" />
-                                        </div>
-                                    </button>
-                                @endif
                             </div>
                         </div>
                     </div>
-                    <div class="py-4 pl-2 pr-4 mt-2 ml-8 space-y-2 rounded rtl:pl-4 rtl:pr-2 rtl:ml-0 rtl:mr-8"
-                         x-show="expanded">
+                    <div
+                        class="py-4 pl-2 pr-4 ml-8 space-y-2 rounded rtl:pl-4 rtl:pr-2 rtl:ml-0 rtl:mr-8"
+                        :class="{
+                            'pointer-events-none': {{ !$source->enabled ? 'true' : 'false' }}
+                        }"
+                    >
                         @if ($source->productSettingsComponent)
                             @livewire($source->productSettingsComponent, [
                                 'product' => $this->slotModel,
