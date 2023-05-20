@@ -112,7 +112,7 @@ class Import extends Component
      */
     public function getProductVariantsProperty(): array
     {
-        if ((int)$this->productId <= 0) {
+        if ((int) $this->productId <= 0) {
             return [];
         }
 
