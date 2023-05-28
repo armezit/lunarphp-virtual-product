@@ -9,6 +9,7 @@ use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
 use Illuminate\Validation\Rules\Enum;
 use Livewire\Component;
 use Lunar\Hub\Http\Livewire\Traits\Notifies;
+use Spatie\LaravelData\DataCollection;
 
 /**
  * @property-read bool $canModify
@@ -25,7 +26,7 @@ abstract class AbstractSchema extends Component
     /**
      * The schema fields.
      */
-    public CodePoolSchemaFieldsList $fields;
+    public CodePoolSchemaFieldsList|DataCollection $fields;
 
     /**
      * Returns validation rules.

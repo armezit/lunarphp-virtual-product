@@ -2,6 +2,7 @@
 
 namespace Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool\Schemas;
 
+use Armezit\Lunar\VirtualProduct\Data\CodePoolSchemaField;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
 
 class SchemaCreate extends AbstractSchema
@@ -14,6 +15,7 @@ class SchemaCreate extends AbstractSchema
     public function mount()
     {
         $this->schema = new CodePoolSchema();
+        $this->fields = CodePoolSchemaField::collection([]);
         $this->addField();
     }
 
