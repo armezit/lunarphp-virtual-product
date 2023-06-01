@@ -25,5 +25,4 @@ class SchemasIndexTest extends TestCase
             ->test(SchemasIndex::class)
             ->assertViewIs('lunarphp-virtual-product::livewire.components.code-pool.schemas.index');
     }
-
 }
