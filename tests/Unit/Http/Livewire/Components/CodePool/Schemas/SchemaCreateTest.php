@@ -25,5 +25,4 @@ class SchemaCreateTest extends TestCase
             ->test(SchemaCreate::class)
             ->assertViewIs('lunarphp-virtual-product::livewire.components.code-pool.schemas.create');
     }
-
 }

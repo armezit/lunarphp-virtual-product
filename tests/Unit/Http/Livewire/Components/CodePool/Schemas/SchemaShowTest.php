@@ -28,5 +28,4 @@ class SchemaShowTest extends TestCase
             ->test(SchemaShow::class, ['schema' => $codePoolSchema])
             ->assertViewIs('lunarphp-virtual-product::livewire.components.code-pool.schemas.show');
     }
-
 }
