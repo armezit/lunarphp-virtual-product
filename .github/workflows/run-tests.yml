@@ -22,7 +22,7 @@ jobs:
             carbon: ^2.53
           - laravel: 10.*
             testbench: 8.*
-            carbon: ^2.63
+            carbon: ^2.64.1
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -48,7 +48,6 @@ jobs:
             "laravel/framework:${{ matrix.laravel }}" \
             "orchestra/testbench:${{ matrix.testbench }}" \
             "nesbot/carbon:${{ matrix.carbon }}"
-            spatie/laravel-package-tools \
             --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
