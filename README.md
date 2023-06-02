@@ -11,6 +11,11 @@ subscriptions and digital downloadable goods like games, virtual game tokens, bo
 The Virtual Product addon for Lunar allows you to define virtual/digital products in your
 [Lunar](https://github.com/lunarphp/lunar) store.
 
+## Requirements
+
+- PHP ^8.1
+- Laravel 9+
+
 ## Quick Setup
 
 You can install the package via composer:
