@@ -11,7 +11,7 @@ use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Traversable;
 
-class CodePoolSchemaFieldsList extends Data implements Wireable, Countable, ArrayAccess, IteratorAggregate
+class CodePoolSchemaFieldsList extends Data implements ArrayAccess, Countable, IteratorAggregate, Wireable
 {
     /**
      * @param  DataCollection<CodePoolSchemaField>  $fields

@@ -10,7 +10,7 @@ use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Traversable;
 
-class ProductSourcesList extends Data implements Wireable, ArrayAccess, IteratorAggregate
+class ProductSourcesList extends Data implements ArrayAccess, IteratorAggregate, Wireable
 {
     /**
      * @param  DataCollection<ProductSource>  $sources
