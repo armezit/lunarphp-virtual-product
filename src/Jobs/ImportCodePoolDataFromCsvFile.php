@@ -6,7 +6,6 @@ use Armezit\Lunar\VirtualProduct\Enums\CodePoolBatchStatus;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolBatch;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolItem;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
-use Armezit\Lunar\VirtualProduct\Utils\ChunkIterator;
 use Illuminate\Bus\Batch;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -16,8 +15,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\LazyCollection;
 use League\Csv\Reader;
-use League\Csv\Statement;
 use Throwable;
 
 class ImportCodePoolDataFromCsvFile implements ShouldQueue
@@ -31,10 +30,10 @@ class ImportCodePoolDataFromCsvFile implements ShouldQueue
      * @return void
      */
     public function __construct(
-        public CodePoolBatch $codePoolBatch,
+        public CodePoolBatch  $codePoolBatch,
         public CodePoolSchema $codePoolSchema,
-        public array $columnsToMap,
-        public string $csvFilePath,
+        public array          $columnsToMap,
+        public string         $csvFilePath,
     ) {
     }
 
@@ -48,14 +47,23 @@ class ImportCodePoolDataFromCsvFile implements ShouldQueue
     public function handle()
     {
         $chunkSize = config('lunarphp-virtual-product.code_pool.import.chunk_size', 10);
-        $chunks = (new ChunkIterator($this->getCsvDataReader()->getIterator(), $chunkSize))->get();
 
-        $jobs = collect($chunks)->map(fn ($chunk) => new ImportCodePoolData(
-            $this->codePoolBatch,
-            $this->codePoolSchema,
-            $chunk,
-            $this->columnsToMap
-        ));
+        $records = LazyCollection::make(function () {
+            foreach ($this->getCsvDataReader() as $record) {
+                yield $record;
+            }
+        });
+
+        $jobs = $records
+            ->chunk($chunkSize)
+            ->map(function ($chunk) {
+                return new ImportCodePoolData(
+                    $this->codePoolBatch,
+                    $this->codePoolSchema,
+                    $chunk,
+                    $this->columnsToMap
+                );
+            });
 
         // NOTE: "$this" is not allowed in serialized closures
         $codePoolBatchId = $this->codePoolBatch->id;
@@ -85,12 +93,10 @@ class ImportCodePoolDataFromCsvFile implements ShouldQueue
             ->dispatch();
     }
 
-    private function getCsvDataReader()
+    private function getCsvDataReader(): Reader
     {
-        $csv = Reader::createFromPath($this->csvFilePath)
+        return Reader::createFromPath($this->csvFilePath)
             ->setHeaderOffset(0)
             ->skipEmptyRecords();
-
-        return Statement::create()->process($csv);
     }
 }
