@@ -125,13 +125,15 @@ class Import extends Component
 
     /**
      * Returns whether we have met the criteria to allow import.
+     *
      * @return bool
      */
     public function getCanImportProperty()
     {
         $nonEmptyMappedColumnsCount = collect(array_values($this->columnsToMap))
-            ->filter(fn (string $value) => !blank($value))
+            ->filter(fn (string $value) => ! blank($value))
             ->count();
+
         return $nonEmptyMappedColumnsCount > 0 && count($this->fileHeaders) === $nonEmptyMappedColumnsCount;
     }
 
