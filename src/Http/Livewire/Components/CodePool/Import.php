@@ -75,7 +75,6 @@ class Import extends Component
         }
 
         $this->batch = new CodePoolBatch();
-        $this->batch->purchasable_id = (int) $this->productVariantId;
 
         $this->initCurrencies();
         $this->setSchemaFields();
@@ -164,7 +163,7 @@ class Import extends Component
 
     private function resetImportSection()
     {
-        $this->showCsvImporter = $this->batch->purchasable_id > 0;
+        $this->showCsvImporter = (int)$this->productVariantId > 0;
         $this->removeFile();
     }
 
@@ -211,12 +210,8 @@ class Import extends Component
 
     public function import(): void
     {
-        $this->validate();
-
         $this->importCsv();
-
         $this->resetImportSection();
-
         $this->emitSelf('$refresh');
     }
 
@@ -228,8 +223,15 @@ class Import extends Component
         $this->batch->purchasable_type = ProductVariant::class;
         $this->batch->purchasable_id = (int) $this->productVariantId;
         $this->batch->staff_id = $staff->id;
-        $this->batch->entry_price_currency_id = $this->defaultCurrencyId;
         $this->batch->status = CodePoolBatchStatus::Running->value;
+
+        // store entry_price_currency_id only if entry_price_currency has value
+        if ($this->batch->entryPriceCurrency === null) {
+            $this->batch->entry_price_currency_id = null;
+        }
+
+        $this->validate();
+
         $this->batch->save();
 
         ImportCodePoolDataFromCsvFile::dispatch(
@@ -269,6 +271,16 @@ class Import extends Component
             'batch.notes' => 'nullable|string',
             'columnsToMap' => 'required|array|min:1',
             'file' => 'required|file|mimes:csv,txt|max:'.$maxUploadSize,
+        ];
+    }
+
+    protected function messages()
+    {
+        return [
+            'productId' => __('lunarphp-virtual-product::validation.import.product_id'),
+            'batch.purchasable_id' => __('lunarphp-virtual-product::validation.import.product_variant_id'),
+            'columnsToMap' => __('lunarphp-virtual-product::validation.import.columns_to_map'),
+            'file' => __('lunarphp-virtual-product::validation.import.csv_file'),
         ];
     }
 }

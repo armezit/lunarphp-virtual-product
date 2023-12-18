@@ -18,21 +18,27 @@
                             {{ __('adminhub::fieldtypes.dropdown.empty_selection') }}
                         </option>
                         @foreach($this->products as $k => $v)
-                            <option value="{{ $k }}">{{ $v }}</option>
+                            <option value="{{ $k }}" {{ $productId == $k ? 'selected' : '' }}>{{ $v }}</option>
                         @endforeach
                     </x-hub::input.select>
+                    @error('productId')
+                    <span class="mt-2 text-red-500 font-medium text-sm">{{ $message }}</span>
+                    @enderror
                 </x-hub::input.group>
 
                 <x-hub::input.group label="{{ __('lunarphp-virtual-product::code-pool.import.input.product_variant') }}"
-                                    for="batch.purchasable_id">
-                    <x-hub::input.select wire:model="batch.purchasable_id" :disabled="blank($productId)">
+                                    for="productVariantId">
+                    <x-hub::input.select wire:model="productVariantId" :disabled="blank($productId)">
                         <option value readonly>
                             {{ __('adminhub::fieldtypes.dropdown.empty_selection') }}
                         </option>
                         @foreach($this->productVariants as $k => $v)
-                            <option value="{{ $k }}">{{ $v }}</option>
+                            <option value="{{ $k }}" {{ $productVariantId == $k ? 'selected' : '' }}>{{ $v }}</option>
                         @endforeach
                     </x-hub::input.select>
+                    @error('batch.purchasable_id')
+                    <span class="mt-2 text-red-500 font-medium text-sm">{{ $message }}</span>
+                    @enderror
                 </x-hub::input.group>
             </div>
 
@@ -50,7 +56,7 @@
                     <div class="mt-1 relative rounded-md shadow-sm">
                         <x-hub::input.text wire:model="batch.entry_price" />
                         <div class="absolute inset-y-0 right-0 flex items-center rtl:left-0 rtl:right-auto">
-                            <label for="currency" class="sr-only">Currency</label>
+                            <label for="batch.entry_price_currency_id" class="sr-only">Currency</label>
                             <x-hub::input.select
                                 wire:model="batch.entry_price_currency_id"
                                 class="form-select block w-full py-2 ps-3 pe-10 text-base bg-transparent border-transparent text-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
@@ -61,11 +67,17 @@
                         </div>
                     </div>
                 </x-hub::input.group>
+                @error('batch.entry_price')
+                <span class="mt-2 text-red-500 font-medium text-sm">{{ $message }}</span>
+                @enderror
 
                 <x-hub::input.group label="{{ __('lunarphp-virtual-product::code-pool.import.input.notes') }}"
                                     for="batch.notes">
                     <x-hub::input.textarea wire:model="batch.notes" rows="1" />
                 </x-hub::input.group>
+                @error('batch.notes')
+                <span class="mt-2 text-red-500 font-medium text-sm">{{ $message }}</span>
+                @enderror
             </div>
         </div>
 
@@ -136,6 +148,9 @@
                                 @endforeach
                             </x-hub::input.select>
 
+                            @error('columnsToMap')
+                            <span class="mt-2 text-red-500 font-medium text-sm">{{ $message }}</span>
+                            @enderror
                             @error('columnsToMap.' . $column)
                             <span class="mt-2 text-red-500 font-medium text-sm">{{ $message }}</span>
                             @enderror
