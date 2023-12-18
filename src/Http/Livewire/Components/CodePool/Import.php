@@ -123,6 +123,18 @@ class Import extends Component
             ->all();
     }
 
+    /**
+     * Returns whether we have met the criteria to allow import.
+     * @return bool
+     */
+    public function getCanImportProperty()
+    {
+        $nonEmptyMappedColumnsCount = collect(array_values($this->columnsToMap))
+            ->filter(fn (string $value) => !blank($value))
+            ->count();
+        return $nonEmptyMappedColumnsCount > 0 && count($this->fileHeaders) === $nonEmptyMappedColumnsCount;
+    }
+
     public function updatedProductId()
     {
         $this->batch->purchasable_id = 0;
@@ -197,7 +209,7 @@ class Import extends Component
         }
     }
 
-    public function import()
+    public function import(): void
     {
         $this->validate();
 
@@ -208,7 +220,7 @@ class Import extends Component
         $this->emitSelf('$refresh');
     }
 
-    protected function importCsv()
+    protected function importCsv(): void
     {
         /** @var Staff $staff */
         $staff = Auth::guard('staff')->user();

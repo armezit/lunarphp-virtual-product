@@ -27,6 +27,7 @@ return [
     'import.input.entry_price' => 'قیمت ورودی',
     'import.input.entry_price_currency' => 'ارز قیمت ورودی',
     'import.input.notes' => 'یادداشت‌ها',
+    'import.submit_btn' => 'بارگذاری اقلام',
 
     'field_type.raw' => 'خام',
     'field_type.string' => 'رشته',
