@@ -7,6 +7,7 @@ use Armezit\Lunar\VirtualProduct\Exceptions\FieldValidationException;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolBatch;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolItem;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
+use DateTime;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,6 +15,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
+use Traversable;
 
 class ImportCodePoolData implements ShouldQueue
 {
@@ -28,7 +30,7 @@ class ImportCodePoolData implements ShouldQueue
     public function __construct(
         public CodePoolBatch $codePoolBatch,
         public CodePoolSchema $codePoolSchema,
-        public array $chunk,
+        public Traversable $chunk,
         public array $columns,
     ) {
     }
@@ -44,17 +46,16 @@ class ImportCodePoolData implements ShouldQueue
     {
         $records = $this->mapRecords();
 
+        $now = new DateTime();
         CodePoolItem::insert(
             collect($records)
-                ->map(function (array $record) {
-                    return [
-                        'batch_id' => $this->codePoolBatch->id,
-                        'schema_id' => $this->codePoolSchema->id,
-                        'data' => json_encode($record),
-                        'created_at' => time(),
-                        'updated_at' => time(),
-                    ];
-                })
+                ->map(fn (array $record) => [
+                    'batch_id' => $this->codePoolBatch->id,
+                    'schema_id' => $this->codePoolSchema->id,
+                    'data' => json_encode($record),
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ])
                 ->toArray()
         );
 
