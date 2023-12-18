@@ -165,7 +165,7 @@ class Import extends Component
 
     private function resetImportSection()
     {
-        $this->showCsvImporter = (int)$this->productVariantId > 0;
+        $this->showCsvImporter = (int) $this->productVariantId > 0;
         $this->removeFile();
     }
 
