@@ -24,6 +24,8 @@ class SchemaShowTest extends TestCase
     /** @test */
     public function cant_view_page_without_permission()
     {
+        $this->setupRolesPermissions();
+
         $staff = Staff::factory()->create([
             'admin' => false,
         ]);
@@ -37,15 +39,13 @@ class SchemaShowTest extends TestCase
     /** @test */
     public function can_view_page_with_correct_permission()
     {
+        $this->setupRolesPermissions();
+
         $staff = Staff::factory()->create([
             'admin' => false,
         ]);
 
-        $staff->permissions()->createMany([
-            [
-                'handle' => 'catalogue:manage-products',
-            ],
-        ]);
+        $staff->givePermissionTo('catalogue:manage-products');
 
         $this->actingAs($staff, 'staff');
 
