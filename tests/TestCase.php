@@ -26,7 +26,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 {
     use FixesSqliteDropForeign;
 
-    public function __construct(string $name = null, array $data = [], string $dataName = '')
+    public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
         $this->hotfixSqlite();
         parent::__construct($name, $data, $dataName);
@@ -37,7 +37,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(function (string $modelName) {
-            return 'Armezit\\Lunar\\VirtualProduct\\Database\\Factories\\' . class_basename($modelName) . 'Factory';
+            return 'Armezit\\Lunar\\VirtualProduct\\Database\\Factories\\'.class_basename($modelName).'Factory';
         });
 
         // additional setup
@@ -49,7 +49,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function defineDatabaseMigrations()
     {
         $this->loadLaravelMigrations();
-        $this->loadMigrationsFrom(__DIR__ . '/../vendor/lunar/core/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../vendor/lunar/core/database/migrations');
     }
 
     protected function getPackageProviders($app)
@@ -74,7 +74,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * Define environment setup.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
     protected function defineEnvironment($app)
@@ -85,14 +85,14 @@ class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * Define environment setup.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
     public function getEnvironmentSetUp($app)
     {
         Config::set('database.default', 'testing');
 
-        $migrationFiles = glob(__DIR__ . '/../database/migrations/*.php.stub');
+        $migrationFiles = glob(__DIR__.'/../database/migrations/*.php.stub');
         foreach ($migrationFiles as $migrationFile) {
             $migration = include $migrationFile;
             $migration->up();
