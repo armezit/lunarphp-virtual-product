@@ -24,6 +24,8 @@ use Lunar\Models\ProductVariant;
  * @property int|null $entry_price_currency_id
  * @property string|null $notes
  * @property ArrayObject $meta
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
  * @property-read Purchasable $purchasable
  * @property-read Staff $staff
  * @property-read Currency|null $entryPriceCurrency

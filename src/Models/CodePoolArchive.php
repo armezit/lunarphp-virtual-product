@@ -14,6 +14,8 @@ use Lunar\Models\OrderLine;
  * @property int $schema_id
  * @property int $order_line_id
  * @property ArrayObject $data
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
  * @property-read CodePoolBatch $batch
  * @property-read CodePoolSchema $schema
  * @property-read OrderLine $orderLine

@@ -15,6 +15,8 @@ use Lunar\Models\Product;
  * @property int $product_id
  * @property string $source
  * @property ArrayObject $meta
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
  * @property-read Product $product
  */
 class VirtualProduct extends Model

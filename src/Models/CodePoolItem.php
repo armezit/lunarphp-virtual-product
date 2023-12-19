@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $batch_id
  * @property int $schema_id
  * @property ArrayObject $data
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
  * @property-read CodePoolBatch $batch
  * @property-read CodePoolSchema $schema
  */

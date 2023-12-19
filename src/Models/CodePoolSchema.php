@@ -13,6 +13,8 @@ use Lunar\Base\Traits\Searchable;
  * @property int $id
  * @property string $name
  * @property Collection $fields
+ * @property ?\Illuminate\Support\Carbon $created_at
+ * @property ?\Illuminate\Support\Carbon $updated_at
  */
 class CodePoolSchema extends Model
 {
