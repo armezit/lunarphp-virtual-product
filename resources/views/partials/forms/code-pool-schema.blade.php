@@ -28,19 +28,19 @@
             </div>
 
             <div
-                class="p-2 space-y-2 bg-gray-100"
+                class="p-2 space-y-2"
                 wire:sort sort.options='{group: "fields", method: "sortFields"}'
             >
                 @foreach($this->fields as $index => $field)
                     <div
-                        class="flex items-center justify-between w-full p-3 space-x-4 text-sm bg-white border border-transparent rounded shadow-sm sort-item-element hover:border-gray-300"
+                        class="flex items-center justify-between w-full p-3 space-x-4 rtl:space-x-reverse text-sm bg-white border border-transparent rounded sort-item-element hover:border-gray-300"
                         wire:key="field_{{ $field->name }}"
                         sort.item="fields"
                         sort.parent="{{ $schema->id }}"
                         sort.id="{{ $field->name }}"
                     >
                         <div sort.handle class="cursor-grab">
-                            <x-hub::icon ref="selector" style="solid" class="mr-2 text-gray-400 hover:text-gray-700" />
+                            <x-hub::icon ref="selector" style="solid" class="ltr:mr-2 rtl:ml-2 text-gray-400 hover:text-gray-700" />
                         </div>
                         <div class="grow grid grid-cols-1 gap-4 sm:grid-cols-6">
                             <div class="sm:col-span-4">

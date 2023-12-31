@@ -1,6 +1,6 @@
 <div class="space-y-4">
     <header>
-        <h1 class="text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
+        <h1 class="text-xl font-bold md:text-2xl">
             {{ __('lunarphp-virtual-product::code-pool.pages.schemas.create.title') }}
         </h1>
     </header>

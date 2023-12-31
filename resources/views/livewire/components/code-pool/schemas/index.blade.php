@@ -1,6 +1,6 @@
 <div class="flex-col space-y-4">
     <header class="sm:flex sm:justify-between sm:items-center">
-        <h1 class="text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
+        <h1 class="text-xl font-bold md:text-2xl">
             {{ __('lunarphp-virtual-product::code-pool.pages.schemas.index.title') }}
         </h1>
 
