@@ -141,7 +141,7 @@
                             {{ $columnLabels[$column] ?? ucfirst(str_replace(['_', '-'], ' ', $column)) }}
                         </label>
                         <div class="mt-1 sm:mt-0 sm:col-span-3">
-                            <x-hub::input.select wire:model.defer="columnsToMap.{{$column}}" name="{{ $column }}" id="{{ $column }}">
+                            <x-hub::input.select wire:model="columnsToMap.{{$column}}" name="{{ $column }}" id="{{ $column }}">
                                 <option value="">{{ __('Select a column') }}</option>
                                 @foreach ($fileHeaders as $fileHeader)
                                     <option value="{{$fileHeader}}">{{ $fileHeader }}</option>
