@@ -34,9 +34,9 @@ class Import extends Component
         'productVariantId' => ['except' => '', 'as' => 'vid'],
     ];
 
-    public ?string $productId = null;
+    public ?int $productId = null;
 
-    public ?string $productVariantId = null;
+    public ?int $productVariantId = null;
 
     public array $currencies = [];
 
@@ -171,6 +171,10 @@ class Import extends Component
 
     private function setSchemaFields()
     {
+        if (blank($this->productId)) {
+            return;
+        }
+
         $virtualProduct = VirtualProduct::onlyCodePool()
             ->where(['product_id' => $this->productId])
             ->first();
