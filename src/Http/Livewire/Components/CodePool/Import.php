@@ -34,9 +34,9 @@ class Import extends Component
         'productVariantId' => ['except' => '', 'as' => 'vid'],
     ];
 
-    public ?int $productId = null;
+    public ?string $productId = null;
 
-    public ?int $productVariantId = null;
+    public ?string $productVariantId = null;
 
     public array $currencies = [];
 
