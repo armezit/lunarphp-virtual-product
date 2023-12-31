@@ -83,7 +83,7 @@
 
         <div
             class="grid md:grid-cols-2 gap-4"
-            x-data="{ open: @entangle('showCsvImporter') }"
+            x-data="{ open: @entangle('showUploadSection') }"
             x-show="open"
             x-cloak
         >

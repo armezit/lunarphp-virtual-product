@@ -48,7 +48,7 @@ class Import extends Component
 
     public ?Collection $schemaFields = null;
 
-    public bool $showCsvImporter = false;
+    public bool $showUploadSection = false;
 
     public array $columnsToMap = [];
 
@@ -78,7 +78,7 @@ class Import extends Component
 
         $this->initCurrencies();
         $this->setSchemaFields();
-        $this->resetImportSection();
+        $this->resetUploadSection();
     }
 
     public function initCurrencies(): void
@@ -140,12 +140,12 @@ class Import extends Component
     {
         $this->productVariantId = null;
         $this->setSchemaFields();
-        $this->resetImportSection();
+        $this->resetUploadSection();
     }
 
     public function updatedProductVariantId()
     {
-        $this->resetImportSection();
+        $this->resetUploadSection();
     }
 
     public function updatedFile()
@@ -163,9 +163,9 @@ class Import extends Component
         $this->fileHeaders = [];
     }
 
-    private function resetImportSection()
+    private function resetUploadSection()
     {
-        $this->showCsvImporter = (int) $this->productVariantId > 0;
+        $this->showUploadSection = (int) $this->productVariantId > 0;
         $this->removeFile();
     }
 
@@ -217,7 +217,7 @@ class Import extends Component
     public function import(): void
     {
         $this->importCsv();
-        $this->resetImportSection();
+        $this->resetUploadSection();
         $this->emitSelf('$refresh');
     }
 
