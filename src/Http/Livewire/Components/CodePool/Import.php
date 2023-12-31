@@ -138,12 +138,12 @@ class Import extends Component
 
     public function updatedProductId()
     {
-        $this->batch->purchasable_id = 0;
+        $this->productVariantId = null;
         $this->setSchemaFields();
         $this->resetImportSection();
     }
 
-    public function updatedBatchPurchasableId()
+    public function updatedProductVariantId()
     {
         $this->resetImportSection();
     }
@@ -271,10 +271,11 @@ class Import extends Component
         $maxUploadSize = config('lunarphp-virtual-product.code_pool.import.max_upload_size');
 
         return [
-            'batch.purchasable_id' => 'required|integer',
             'batch.entry_price' => 'nullable|numeric',
             'batch.entry_price_currency_id' => 'nullable|integer',
             'batch.notes' => 'nullable|string',
+            'productId' => 'required|integer',
+            'productVariantId' => 'required|integer',
             'columnsToMap' => 'required|array|min:1',
             'file' => 'required|file|mimes:csv,txt|max:'.$maxUploadSize,
         ];
@@ -284,7 +285,7 @@ class Import extends Component
     {
         return [
             'productId' => __('lunarphp-virtual-product::validation.import.product_id'),
-            'batch.purchasable_id' => __('lunarphp-virtual-product::validation.import.product_variant_id'),
+            'productVariantId' => __('lunarphp-virtual-product::validation.import.product_variant_id'),
             'columnsToMap' => __('lunarphp-virtual-product::validation.import.columns_to_map'),
             'file' => __('lunarphp-virtual-product::validation.import.csv_file'),
         ];
