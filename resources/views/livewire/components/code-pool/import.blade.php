@@ -159,7 +159,7 @@
                     @endforeach
                 </div>
                 @else
-                    <div class="py-2 text-gray-400 text-sm">Upload a CSV file to start column matching.</div>
+                    <div class="py-2 text-gray-400 text-sm">Upload a file to start column matching.</div>
                 @endif
 
             </div>

@@ -6,6 +6,7 @@ use Armezit\Lunar\VirtualProduct\Enums\CodePoolBatchStatus;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolBatch;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolItem;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
+use Armezit\Lunar\VirtualProduct\Repository\SpreadsheetFileReader;
 use Illuminate\Bus\Batch;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -16,10 +17,9 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;
-use League\Csv\Reader;
 use Throwable;
 
-class ImportCodePoolDataFromCsvFile implements ShouldQueue
+class ImportCodePoolDataFromFile implements ShouldQueue
 {
     use Batchable;
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -30,10 +30,10 @@ class ImportCodePoolDataFromCsvFile implements ShouldQueue
      * @return void
      */
     public function __construct(
-        public CodePoolBatch $codePoolBatch,
+        public CodePoolBatch  $codePoolBatch,
         public CodePoolSchema $codePoolSchema,
-        public array $columnsToMap,
-        public string $csvFilePath,
+        public array          $columnsToMap,
+        public string         $filepath,
     ) {
     }
 
@@ -48,8 +48,9 @@ class ImportCodePoolDataFromCsvFile implements ShouldQueue
     {
         $chunkSize = config('lunarphp-virtual-product.code_pool.import.chunk_size', 10);
 
-        $records = LazyCollection::make(function () {
-            foreach ($this->getCsvDataReader() as $record) {
+        $readerIterator = (new SpreadsheetFileReader($this->filepath))->getRecordsIterator();
+        $records = LazyCollection::make(function () use ($readerIterator) {
+            foreach ($readerIterator as $record) {
                 yield $record;
             }
         });
@@ -69,7 +70,7 @@ class ImportCodePoolDataFromCsvFile implements ShouldQueue
         $codePoolBatchId = $this->codePoolBatch->id;
 
         Bus::batch($jobs)
-            ->name(sprintf('Code pool csv import: purchasable_id=%s', $this->codePoolBatch->purchasable_id))
+            ->name(sprintf('Code pool import: purchasable_id=%s', $this->codePoolBatch->purchasable_id))
             ->withOption('tags', ['Virtual Product'])
             ->then(function (Batch $batch) use ($codePoolBatchId) {
                 // All jobs completed successfully...
@@ -88,15 +89,7 @@ class ImportCodePoolDataFromCsvFile implements ShouldQueue
                 });
             })->finally(function (Batch $batch) {
                 // The batch has finished executing...
-                $a = 1;
             })
             ->dispatch();
-    }
-
-    private function getCsvDataReader(): Reader
-    {
-        return Reader::createFromPath($this->csvFilePath)
-            ->setHeaderOffset(0)
-            ->skipEmptyRecords();
     }
 }

@@ -3,15 +3,15 @@
 namespace Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool;
 
 use Armezit\Lunar\VirtualProduct\Enums\CodePoolBatchStatus;
-use Armezit\Lunar\VirtualProduct\Jobs\ImportCodePoolDataFromCsvFile;
+use Armezit\Lunar\VirtualProduct\Exceptions\ReaderException;
+use Armezit\Lunar\VirtualProduct\Jobs\ImportCodePoolDataFromFile;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolBatch;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
 use Armezit\Lunar\VirtualProduct\Models\VirtualProduct;
+use Armezit\Lunar\VirtualProduct\Repository\SpreadsheetFileReader;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use League\Csv\Reader;
-use League\Csv\Statement;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Lunar\Hub\Http\Livewire\Traits\Notifies;
@@ -54,23 +54,28 @@ class Import extends Component
 
     public array $fileHeaders = [];
 
-    public int $fileRowCount = 0;
+    public int $fileRecordsCount = 0;
 
     /** @var \Livewire\TemporaryUploadedFile|string */
     public $file;
 
-    public array $allowedFiletypes = ['text/csv'];
+    public array $allowedFiletypes = [
+        'application/vnd.ms-excel',
+        'application/vnd.oasis.opendocument.spreadsheet',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'text/csv',
+    ];
 
     /**
      * @return void
      */
     public function mount()
     {
-        if (! array_key_exists($this->productId, $this->products)) {
+        if (!array_key_exists($this->productId, $this->products)) {
             $this->productId = null;
         }
 
-        if (! array_key_exists($this->productVariantId, $this->productVariants)) {
+        if (!array_key_exists($this->productVariantId, $this->productVariants)) {
             $this->productVariantId = null;
         }
 
@@ -111,7 +116,7 @@ class Import extends Component
      */
     public function getProductVariantsProperty(): array
     {
-        if ((int) $this->productId <= 0) {
+        if ((int)$this->productId <= 0) {
             return [];
         }
 
@@ -130,7 +135,7 @@ class Import extends Component
     public function getCanImportProperty()
     {
         $nonEmptyMappedColumnsCount = collect(array_values($this->columnsToMap))
-            ->filter(fn (string $value) => ! blank($value))
+            ->filter(fn (string $value) => !blank($value))
             ->count();
 
         return $nonEmptyMappedColumnsCount > 0 && count($this->fileHeaders) === $nonEmptyMappedColumnsCount;
@@ -152,7 +157,7 @@ class Import extends Component
     {
         $this->validateOnly('file');
 
-        $this->setCsvProperties();
+        $this->extractDataFileProperties();
 
         $this->resetValidation();
     }
@@ -165,7 +170,7 @@ class Import extends Component
 
     private function resetUploadSection()
     {
-        $this->showUploadSection = (int) $this->productVariantId > 0;
+        $this->showUploadSection = (int)$this->productVariantId > 0;
         $this->removeFile();
     }
 
@@ -179,7 +184,7 @@ class Import extends Component
             ->where(['product_id' => $this->productId])
             ->first();
 
-        if (! $virtualProduct) {
+        if (!$virtualProduct) {
             return;
         }
 
@@ -193,41 +198,35 @@ class Import extends Component
             ->toArray();
     }
 
-    private function setCsvProperties()
+    private function extractDataFileProperties()
     {
         try {
-            $csv = Reader::createFromPath($this->file->getRealPath())
-                ->setHeaderOffset(0)
-                ->skipEmptyRecords();
-
-            $records = Statement::create()->process($csv);
-
-            $this->fileHeaders = $csv->getHeader();
-            $this->fileRowCount = $records->count();
-        } catch (\League\Csv\Exception $e) {
+            $reader = new SpreadsheetFileReader($this->file->getRealPath());
+            $this->fileHeaders = $reader->getHeader();
+            $this->fileRecordsCount = $reader->getRecordsCount();
+        } catch (ReaderException $e) {
             Log::warning($e->getMessage());
-
             return $this->addError(
                 'file',
-                __('The file has error/errors, Please check, and try again')
+                __('The file has error(s). Please check and try again')
             );
         }
     }
 
     public function import(): void
     {
-        $this->importCsv();
+        $this->importData();
         $this->resetUploadSection();
         $this->emitSelf('$refresh');
     }
 
-    protected function importCsv(): void
+    protected function importData(): void
     {
         /** @var Staff $staff */
         $staff = Auth::guard('staff')->user();
 
         $this->batch->purchasable_type = ProductVariant::class;
-        $this->batch->purchasable_id = (int) $this->productVariantId;
+        $this->batch->purchasable_id = (int)$this->productVariantId;
         $this->batch->staff_id = $staff->id;
         $this->batch->status = CodePoolBatchStatus::Running->value;
 
@@ -240,7 +239,7 @@ class Import extends Component
 
         $this->batch->save();
 
-        ImportCodePoolDataFromCsvFile::dispatch(
+        ImportCodePoolDataFromFile::dispatch(
             $this->batch,
             $this->schema,
             $this->columnsToMap,
@@ -256,7 +255,7 @@ class Import extends Component
         $base = log($size) / log(1024);
         $suffixes = ['KB', 'MB', 'GB', 'TB'];
 
-        return round(pow(1024, $base - floor($base)), $precision).$suffixes[floor($base)];
+        return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
     }
 
     public function render()
@@ -277,7 +276,7 @@ class Import extends Component
             'productId' => 'required|integer',
             'productVariantId' => 'required|integer',
             'columnsToMap' => 'required|array|min:1',
-            'file' => 'required|file|mimes:csv,txt|max:'.$maxUploadSize,
+            'file' => 'required|file|mimes:csv,ods,txt,xls,xlsx|max:' . $maxUploadSize,
         ];
     }
 
@@ -287,7 +286,7 @@ class Import extends Component
             'productId' => __('lunarphp-virtual-product::validation.import.product_id'),
             'productVariantId' => __('lunarphp-virtual-product::validation.import.product_variant_id'),
             'columnsToMap' => __('lunarphp-virtual-product::validation.import.columns_to_map'),
-            'file' => __('lunarphp-virtual-product::validation.import.csv_file'),
+            'file' => __('lunarphp-virtual-product::validation.import.file'),
         ];
     }
 }
