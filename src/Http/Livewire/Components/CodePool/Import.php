@@ -71,11 +71,11 @@ class Import extends Component
      */
     public function mount()
     {
-        if (!array_key_exists($this->productId, $this->products)) {
+        if (! array_key_exists($this->productId, $this->products)) {
             $this->productId = null;
         }
 
-        if (!array_key_exists($this->productVariantId, $this->productVariants)) {
+        if (! array_key_exists($this->productVariantId, $this->productVariants)) {
             $this->productVariantId = null;
         }
 
@@ -116,7 +116,7 @@ class Import extends Component
      */
     public function getProductVariantsProperty(): array
     {
-        if ((int)$this->productId <= 0) {
+        if ((int) $this->productId <= 0) {
             return [];
         }
 
@@ -135,7 +135,7 @@ class Import extends Component
     public function getCanImportProperty()
     {
         $nonEmptyMappedColumnsCount = collect(array_values($this->columnsToMap))
-            ->filter(fn (string $value) => !blank($value))
+            ->filter(fn (string $value) => ! blank($value))
             ->count();
 
         return $nonEmptyMappedColumnsCount > 0 && count($this->fileHeaders) === $nonEmptyMappedColumnsCount;
@@ -170,7 +170,7 @@ class Import extends Component
 
     private function resetUploadSection()
     {
-        $this->showUploadSection = (int)$this->productVariantId > 0;
+        $this->showUploadSection = (int) $this->productVariantId > 0;
         $this->removeFile();
     }
 
@@ -184,7 +184,7 @@ class Import extends Component
             ->where(['product_id' => $this->productId])
             ->first();
 
-        if (!$virtualProduct) {
+        if (! $virtualProduct) {
             return;
         }
 
@@ -206,6 +206,7 @@ class Import extends Component
             $this->fileRecordsCount = $reader->getRecordsCount();
         } catch (ReaderException $e) {
             Log::warning($e->getMessage());
+
             return $this->addError(
                 'file',
                 __('The file has error(s). Please check and try again')
@@ -226,7 +227,7 @@ class Import extends Component
         $staff = Auth::guard('staff')->user();
 
         $this->batch->purchasable_type = ProductVariant::class;
-        $this->batch->purchasable_id = (int)$this->productVariantId;
+        $this->batch->purchasable_id = (int) $this->productVariantId;
         $this->batch->staff_id = $staff->id;
         $this->batch->status = CodePoolBatchStatus::Running->value;
 
@@ -255,7 +256,7 @@ class Import extends Component
         $base = log($size) / log(1024);
         $suffixes = ['KB', 'MB', 'GB', 'TB'];
 
-        return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
+        return round(pow(1024, $base - floor($base)), $precision).$suffixes[floor($base)];
     }
 
     public function render()
@@ -276,7 +277,7 @@ class Import extends Component
             'productId' => 'required|integer',
             'productVariantId' => 'required|integer',
             'columnsToMap' => 'required|array|min:1',
-            'file' => 'required|file|mimes:csv,ods,txt,xls,xlsx|max:' . $maxUploadSize,
+            'file' => 'required|file|mimes:csv,ods,txt,xls,xlsx|max:'.$maxUploadSize,
         ];
     }
 

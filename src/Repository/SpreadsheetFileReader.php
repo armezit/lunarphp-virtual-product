@@ -10,7 +10,9 @@ use Traversable;
 class SpreadsheetFileReader implements ReaderInterface
 {
     private array $header = [];
+
     private int $recordsCount = 0;
+
     private Iterator $recordsIterator;
 
     /**
@@ -49,7 +51,8 @@ class SpreadsheetFileReader implements ReaderInterface
 
     public function getRecordsIterator(): Iterator
     {
-        return new class($this->recordsIterator, $this->header) extends \IteratorIterator {
+        return new class($this->recordsIterator, $this->header) extends \IteratorIterator
+        {
             public function __construct(Traversable $iterator, public array $header)
             {
                 parent::__construct($iterator);
@@ -65,6 +68,7 @@ class SpreadsheetFileReader implements ReaderInterface
                 foreach ($row->getCellIterator() as $cell) {
                     $record[$this->header[$cell->getXfIndex()]] = $cell->getValue();
                 }
+
                 return $record;
             }
         };
