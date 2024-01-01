@@ -30,10 +30,10 @@ class ImportCodePoolDataFromFile implements ShouldQueue
      * @return void
      */
     public function __construct(
-        public CodePoolBatch  $codePoolBatch,
+        public CodePoolBatch $codePoolBatch,
         public CodePoolSchema $codePoolSchema,
-        public array          $columnsToMap,
-        public string         $filepath,
+        public array $columnsToMap,
+        public string $filepath,
     ) {
     }
 
