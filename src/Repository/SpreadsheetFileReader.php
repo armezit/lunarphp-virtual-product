@@ -60,10 +60,11 @@ class SpreadsheetFileReader implements ReaderInterface
                 /** @var PhpSpreadsheet\Worksheet\Row $row */
                 $row = $this->getInnerIterator()->current();
 
+                $i = 0;
                 $record = [];
                 /** @var PhpSpreadsheet\Cell\Cell $cell */
                 foreach ($row->getCellIterator() as $cell) {
-                    $record[$this->header[$cell->getXfIndex()]] = $cell->getValue();
+                    $record[$this->header[$i++]] = $cell->getValue();
                 }
                 return $record;
             }

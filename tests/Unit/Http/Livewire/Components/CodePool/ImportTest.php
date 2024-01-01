@@ -88,7 +88,7 @@ class ImportTest extends TestCase
             ->test(Import::class)
             ->assertSet('productId', $product->id)
             ->assertCount('productVariants', 0)
-            ->assertSet('showCsvImporter', false)
+            ->assertSet('showUploadSection', false)
             ->assertSet('schemaFields', collect($schemaFields))
             ->assertSet('columnsToMap', ['serial' => '', 'pin' => '']);
 
@@ -102,7 +102,7 @@ class ImportTest extends TestCase
             ->withQueryParams(['pid' => $product->id, 'vid' => $variants[0]->id])
             ->test(Import::class)
             ->assertCount('productVariants', 2)
-            ->assertSet('showCsvImporter', true)
+            ->assertSet('showUploadSection', true)
             ->assertSet('schemaFields', collect($schemaFields))
             ->assertSet('columnsToMap', ['serial' => '', 'pin' => '']);
     }
@@ -134,7 +134,7 @@ class ImportTest extends TestCase
             ->test(Import::class)
             ->set('file', $validFile)
             ->assertSet('fileHeaders', ['SN', 'PN'])
-            ->assertSet('fileRowCount', 2);
+            ->assertSet('fileRecordsCount', 2);
     }
 
     /** @test */
@@ -189,7 +189,7 @@ class ImportTest extends TestCase
                 'C' => 'c',
             ])
             ->call('import')
-            ->assertSet('fileRowCount', 7);
+            ->assertSet('fileRecordsCount', 7);
 
         $config = config('lunarphp-virtual-product.code_pool');
 
@@ -206,7 +206,7 @@ class ImportTest extends TestCase
             'data' => json_encode([
                 'A' => 'foo',
                 'B' => 'foo@bar.com',
-                'C' => '14.5',
+                'C' => 14.5,
             ]),
         ]);
         $this->assertDatabaseMissing($config['items_table'], [
@@ -214,7 +214,7 @@ class ImportTest extends TestCase
             'data' => json_encode([
                 'B' => 'foo@bar.com',
                 'A' => 'foo',
-                'C' => '14.5',
+                'C' => 14.5,
             ]),
         ]);
     }
