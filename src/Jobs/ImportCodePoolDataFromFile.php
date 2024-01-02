@@ -69,7 +69,7 @@ class ImportCodePoolDataFromFile implements ShouldQueue
         // NOTE: "$this" is not allowed in serialized closures
         $codePoolBatchId = $this->codePoolBatch->id;
 
-        Bus::batch($jobs)
+        $batch = Bus::batch($jobs)
             ->name(sprintf('Code pool import: purchasable_id=%s', $this->codePoolBatch->purchasable_id))
             ->withOption('tags', ['Virtual Product'])
             ->then(function (Batch $batch) use ($codePoolBatchId) {
@@ -91,5 +91,12 @@ class ImportCodePoolDataFromFile implements ShouldQueue
                 // The batch has finished executing...
             })
             ->dispatch();
+
+        // associate the job with subject model
+        // NOTE: wait for lunarphp 0.8
+        //\Lunar\Models\JobBatch::find($batch->id)
+        //    ?->subject()
+        //    ->associate($this->codePoolSchema)
+        //    ->save();
     }
 }
