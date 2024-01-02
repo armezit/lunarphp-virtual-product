@@ -66,7 +66,7 @@ class SchemaCreateTest extends TestCase
                         'name' => '',
                         'type' => CodePoolFieldType::Raw->value,
                         'order' => 1,
-                    ]
+                    ],
                 ])
             ))
             ->call('create')
