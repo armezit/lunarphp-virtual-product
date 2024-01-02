@@ -64,6 +64,15 @@ abstract class AbstractSchema extends Component
         );
     }
 
+    public function updatingFields(&$value, $name): void
+    {
+        if (preg_match('/(\d+)\.(.+)/', $name, $matches) !== false) {
+            if ($matches[2] === 'type') {
+                $value = CodePoolFieldType::from($value);
+            }
+        }
+    }
+
     /**
      * Sort schema fields.
      *
