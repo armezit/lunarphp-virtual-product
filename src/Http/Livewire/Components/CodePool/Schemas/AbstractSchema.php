@@ -55,11 +55,11 @@ abstract class AbstractSchema extends Component
         return CodePoolFieldType::labels();
     }
 
-    public function addField()
+    public function addField(?string $name = null, ?string $type = null): void
     {
         $this->fields[] = new CodePoolSchemaField(
-            name: null,
-            type: CodePoolFieldType::Raw,
+            name: $name,
+            type: $type !== null ? CodePoolFieldType::from($type) : CodePoolFieldType::Raw,
             order: count($this->fields) + 1
         );
     }
@@ -67,7 +67,7 @@ abstract class AbstractSchema extends Component
     public function updatingFields(&$value, $name): void
     {
         if (preg_match('/(\d+)\.(.+)/', $name, $matches) !== false) {
-            if ($matches[2] === 'type') {
+            if (isset($matches[2]) && $matches[2] === 'type') {
                 $value = CodePoolFieldType::from($value);
             }
         }
