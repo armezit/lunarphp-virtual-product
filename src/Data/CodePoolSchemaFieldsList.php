@@ -34,6 +34,11 @@ class CodePoolSchemaFieldsList extends Data implements ArrayAccess, Countable, I
         );
     }
 
+    public function toArray(): array
+    {
+        return $this->fields->toArray();
+    }
+
     public function offsetExists(mixed $offset): bool
     {
         return $this->fields->offsetExists($offset);
