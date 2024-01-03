@@ -36,7 +36,8 @@ class CodePoolSchema extends Model
                 $field['name'] = Str::of($field['name'])
                     ->remove(['.', ':'])
                     ->squish()
-                    ->trim();
+                    ->trim()
+                    ->toString();
                 return $field;
             });
         });

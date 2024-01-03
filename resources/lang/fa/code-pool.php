@@ -6,6 +6,7 @@ return [
     'pages.schemas.index.title' => 'الگوی اقلام',
     'pages.schemas.index.create_btn' => 'ایجاد الگوی اقلام',
     'pages.schemas.create.title' => 'ایجاد الگوی اقلام',
+    'pages.batches.index.title' => 'تاریخچه بارگذاری‌ها',
     'pages.import.title' => 'بارگذاری اقلام',
 
     'partials.forms.schema.data_fields' => 'فیلدهای داده',

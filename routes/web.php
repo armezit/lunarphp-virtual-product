@@ -1,5 +1,6 @@
 <?php
 
+use Armezit\Lunar\VirtualProduct\Http\Livewire\Pages\CodePool\Batches\BatchesIndex;
 use Armezit\Lunar\VirtualProduct\Http\Livewire\Pages\CodePool\Import;
 use Armezit\Lunar\VirtualProduct\Http\Livewire\Pages\CodePool\Schemas\SchemaCreate;
 use Armezit\Lunar\VirtualProduct\Http\Livewire\Pages\CodePool\Schemas\SchemaShow;
@@ -30,6 +31,7 @@ Route::group([
             'prefix' => 'code-pool',
         ], function ($router) {
             Route::get('/import', Import::class)->name('hub.virtual-products.code-pool.import');
+            Route::get('/batches', BatchesIndex::class)->name('hub.virtual-products.code-pool.batches.index');
             Route::get('/schemas', SchemasIndex::class)->name('hub.virtual-products.code-pool.schemas.index');
             Route::get('/schemas/create', SchemaCreate::class)->name('hub.virtual-products.code-pool.schemas.create');
             Route::get('/schemas/{schema}', SchemaShow::class)->name('hub.virtual-products.code-pool.schemas.show');

@@ -6,6 +6,7 @@ return [
     'pages.schemas.index.title' => 'Code pool schemas',
     'pages.schemas.index.create_btn' => 'Create new schema',
     'pages.schemas.create.title' => 'Create schema',
+    'pages.batches.index.title' => 'Import History',
     'pages.import.title' => 'Import items',
 
     'partials.forms.schema.data_fields' => 'Data fields',

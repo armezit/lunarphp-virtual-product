@@ -59,7 +59,7 @@ class ImportCodePoolData implements ShouldQueue
                 ->toArray()
         );
 
-        $this->codePoolBatch->meta['processed_rows'] = count($records);
+        $this->codePoolBatch->meta['imported'] = count($records);
         $this->codePoolBatch->save();
     }
 

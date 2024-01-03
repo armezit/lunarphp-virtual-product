@@ -217,6 +217,7 @@ class Import extends Component
     public function import(): void
     {
         $this->importData();
+        $this->notify('New import job started in the background.');
         $this->resetUploadSection();
         $this->emitSelf('$refresh');
     }

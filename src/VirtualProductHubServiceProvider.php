@@ -2,6 +2,8 @@
 
 namespace Armezit\Lunar\VirtualProduct;
 
+use Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool\Batches\BatchesIndex;
+use Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool\Batches\BatchesTable;
 use Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool\Import;
 use Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool\ProductSettings;
 use Armezit\Lunar\VirtualProduct\Http\Livewire\Components\CodePool\Schemas\SchemaCreate;
@@ -44,6 +46,9 @@ class VirtualProductHubServiceProvider extends ServiceProvider
         Livewire::component('hub.lunarphp-virtual-product.components.code_pool.schemas.create', SchemaCreate::class);
         Livewire::component('hub.lunarphp-virtual-product.components.code_pool.schemas.show', SchemaShow::class);
 
+        Livewire::component('hub.lunarphp-virtual-product.components.code_pool.batches.index', BatchesIndex::class);
+        Livewire::component('hub.lunarphp-virtual-product.components.code_pool.batches.table', BatchesTable::class);
+
         Livewire::component('hub.lunarphp-virtual-product.components.code_pool.product-settings', ProductSettings::class);
         Livewire::component('hub.lunarphp-virtual-product.components.code_pool.import', Import::class);
     }
@@ -76,16 +81,21 @@ class VirtualProductHubServiceProvider extends ServiceProvider
             $item->name(__('lunarphp-virtual-product::code-pool.pages.schemas.index.title'))
                 ->handle('hub.virtual-products.code-pool.schemas.index')
                 ->route('hub.virtual-products.code-pool.schemas.index')
-                ->gate('settings:core')
-                ->icon('cube-transparent');
+                ->gate('settings:core');
         });
 
         $virtualProductGroup->addItem(function (MenuLink $item) {
             $item->name(__('lunarphp-virtual-product::code-pool.pages.import.title'))
                 ->handle('hub.virtual-products.code-pool.import')
                 ->route('hub.virtual-products.code-pool.import')
-                ->gate('settings:core')
-                ->icon('cloud-upload');
+                ->gate('settings:core');
+        });
+
+        $virtualProductGroup->addItem(function (MenuLink $item) {
+            $item->name(__('lunarphp-virtual-product::code-pool.pages.batches.index.title'))
+                ->handle('hub.virtual-products.code-pool.batches.index')
+                ->route('hub.virtual-products.code-pool.batches.index')
+                ->gate('settings:core');
         });
     }
 

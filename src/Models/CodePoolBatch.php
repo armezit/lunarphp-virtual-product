@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Lunar\Base\Purchasable;
+use Lunar\Base\Traits\Searchable;
 use Lunar\Hub\Models\Staff;
 use Lunar\Models\Currency;
 use Lunar\Models\ProductVariant;
@@ -26,7 +27,7 @@ use Lunar\Models\ProductVariant;
  * @property ArrayObject $meta
  * @property ?\Illuminate\Support\Carbon $created_at
  * @property ?\Illuminate\Support\Carbon $updated_at
- * @property-read Purchasable $purchasable
+ * @property-read Purchasable|ProductVariant $purchasable
  * @property-read Staff $staff
  * @property-read Currency|null $entryPriceCurrency
  *
@@ -36,6 +37,7 @@ use Lunar\Models\ProductVariant;
 class CodePoolBatch extends Model
 {
     use HasFactory;
+    use Searchable;
 
     /**
      * @var array<string, string>
@@ -92,11 +94,11 @@ class CodePoolBatch extends Model
     /**
      * Return the staff member relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function staff()
     {
-        return $this->hasOne(Staff::class);
+        return $this->belongsTo(Staff::class);
     }
 
     /**
@@ -140,8 +142,10 @@ class CodePoolBatch extends Model
     /**
      * Get the percentage of import completion
      */
-    public function percentageComplete(): float
+    public function getProgress(): float
     {
-        return floor(($this->meta['processed_rows'] / $this->meta['total_rows']) * 100);
+        return isset($this->meta['imported']) ?
+            floor(($this->meta['imported'] / $this->meta['total']) * 100) :
+            0;
     }
 }

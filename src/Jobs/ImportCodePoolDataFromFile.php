@@ -55,6 +55,9 @@ class ImportCodePoolDataFromFile implements ShouldQueue
             }
         });
 
+        $this->codePoolBatch->meta['total'] = $records->count();
+        $this->codePoolBatch->save();
+
         $jobs = $records
             ->chunk($chunkSize)
             ->map(function ($chunk) {
