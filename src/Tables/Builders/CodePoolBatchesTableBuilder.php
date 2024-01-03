@@ -19,7 +19,7 @@ class CodePoolBatchesTableBuilder extends TableBuilder
         }
 
         $filters = collect($this->queryStringFilters)->filter(function ($value) {
-            return (bool)$value;
+            return (bool) $value;
         });
 
         foreach ($this->queryExtenders as $qe) {

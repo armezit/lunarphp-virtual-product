@@ -109,14 +109,12 @@ abstract class AbstractSchema extends Component
 
     /**
      * Validates the LiveWire request, updates the model and dispatches and event.
-     *
-     * @return void
      */
     public function save(): void
     {
         $this->validate();
 
-        $notifyMessage = !$this->schema->exists ?
+        $notifyMessage = ! $this->schema->exists ?
             'Code pool schema successfully created.' :
             'Code pool schema successfully updated.';
 

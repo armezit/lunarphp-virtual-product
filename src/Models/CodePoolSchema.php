@@ -38,6 +38,7 @@ class CodePoolSchema extends Model
                     ->squish()
                     ->trim()
                     ->toString();
+
                 return $field;
             });
         });

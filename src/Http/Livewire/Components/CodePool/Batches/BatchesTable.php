@@ -13,10 +13,8 @@ use Lunar\Hub\Models\SavedSearch;
 use Lunar\Hub\Models\Staff;
 use Lunar\Hub\Tables\TableBuilder;
 use Lunar\LivewireTables\Components\Columns\ProgressColumn;
-use Lunar\LivewireTables\Components\Columns\TagsColumn;
 use Lunar\LivewireTables\Components\Columns\TextColumn;
 use Lunar\LivewireTables\Components\Table;
-use Lunar\Models\JobBatch;
 
 /**
  * @property-read CodePoolSchemasTableBuilder $tableBuilder
@@ -38,7 +36,6 @@ class BatchesTable extends Table
 
     /**
      * Only display list of running and recently executed import batches
-     * @var bool
      */
     public bool $onlyRecent = false;
 
@@ -97,11 +94,11 @@ class BatchesTable extends Table
             TextColumn::make('starts_at', fn (CodePoolBatch $batch) => $batch->created_at),
 
             TextColumn::make('causer.email', function (CodePoolBatch $batch) {
-                return $batch->staff->firstname . ' ' . $batch->staff->lastname;
+                return $batch->staff->firstname.' '.$batch->staff->lastname;
             }),
 
             TextColumn::make('entry_price', function (CodePoolBatch $batch) {
-                return $batch->entry_price . ' ' . $batch->entryPriceCurrency?->code;
+                return $batch->entry_price.' '.$batch->entryPriceCurrency?->code;
             })->heading(__('lunarphp-virtual-product::code-pool.import.input.entry_price')),
 
             TextColumn::make('notes', fn (CodePoolBatch $batch) => $batch->notes)
@@ -112,7 +109,7 @@ class BatchesTable extends Table
     /**
      * Remove a saved search record.
      *
-     * @param int $id
+     * @param  int  $id
      * @return void
      */
     public function deleteSavedSearch($id)
