@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Lunar\Base\Traits\Searchable;
 
 /**
@@ -27,6 +28,19 @@ class CodePoolSchema extends Model
     protected $casts = [
         'fields' => AsCollection::class,
     ];
+
+    protected static function booted(): void
+    {
+        static::saving(function (self $schema) {
+            $schema->fields->transform(function (array $field) {
+                $field['name'] = Str::of($field['name'])
+                    ->remove(['.', ':'])
+                    ->squish()
+                    ->trim();
+                return $field;
+            });
+        });
+    }
 
     /**
      * Get the table associated with the model.
