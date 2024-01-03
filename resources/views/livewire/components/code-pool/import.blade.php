@@ -138,7 +138,7 @@
                     @foreach ($columnsToMap as $column => $value)
                     <div class="grid grid-cols-4 gap-4 items-start">
                         <label for="{{ $column }}" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2 col-span-1">
-                            {{ $columnLabels[$column] ?? ucfirst(str_replace(['_', '-'], ' ', $column)) }}
+                            {{ Str::title(str_replace(['_', '-'], ' ', $column)) }}
                         </label>
                         <div class="mt-1 sm:mt-0 sm:col-span-3">
                             <x-hub::input.select wire:model="columnsToMap.{{$column}}" name="{{ $column }}" id="{{ $column }}">
