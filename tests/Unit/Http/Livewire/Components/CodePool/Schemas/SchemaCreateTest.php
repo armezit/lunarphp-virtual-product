@@ -45,7 +45,7 @@ class SchemaCreateTest extends TestCase
     {
         Livewire::test(SchemaCreate::class)
             ->set('schema.name', '')
-            ->call('create')
+            ->call('save')
             ->assertHasErrors(['schema.name' => 'required']);
     }
 
@@ -56,7 +56,7 @@ class SchemaCreateTest extends TestCase
             ->set('fields', new CodePoolSchemaFieldsList(
                 fields: CodePoolSchemaField::collection([])
             ))
-            ->call('create')
+            ->call('save')
             ->assertHasErrors(['fields' => 'required']);
 
         Livewire::test(SchemaCreate::class)
@@ -69,7 +69,7 @@ class SchemaCreateTest extends TestCase
                     ]
                 ])
             ))
-            ->call('create')
+            ->call('save')
             ->assertHasErrors(['fields.0.name' => 'required']);
     }
 
@@ -105,7 +105,7 @@ class SchemaCreateTest extends TestCase
             ))
             ->call('addField', ...$fields[0])
             ->call('addField', ...$fields[1])
-            ->call('create');
+            ->call('save');
 
         $this->assertDatabaseHas($this->getCodePoolSchemaTable(), [
             'name' => 'Test Schema',

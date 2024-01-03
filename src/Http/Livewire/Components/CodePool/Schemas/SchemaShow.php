@@ -28,23 +28,6 @@ class SchemaShow extends AbstractSchema
     }
 
     /**
-     * Validates the LiveWire request, updates the model and dispatches and event.
-     *
-     * @return void
-     */
-    public function update()
-    {
-        $this->validate();
-
-        $this->schema->save();
-
-        $this->notify(
-            'Code pool schema successfully updated.',
-            'hub.virtual-products.code-pool.schemas.index'
-        );
-    }
-
-    /**
      * Soft deletes a schema.
      *
      * @return void

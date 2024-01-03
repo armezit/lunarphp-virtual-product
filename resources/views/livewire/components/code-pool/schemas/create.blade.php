@@ -7,7 +7,7 @@
 
     <form action="#"
           method="POST"
-          wire:submit.prevent="create">
+          wire:submit.prevent="save">
         @include('lunarphp-virtual-product::partials.forms.code-pool-schema')
     </form>
 </div>

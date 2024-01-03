@@ -106,4 +106,23 @@ abstract class AbstractSchema extends Component
     {
         return $this->schema->items()->count() < 1 && $this->schema->archivedItems()->count() < 1;
     }
+
+    /**
+     * Validates the LiveWire request, updates the model and dispatches and event.
+     *
+     * @return void
+     */
+    public function save(): void
+    {
+        $this->validate();
+
+        $notifyMessage = !$this->schema->exists ?
+            'Code pool schema successfully created.' :
+            'Code pool schema successfully updated.';
+
+        $this->schema->fields = collect($this->fields);
+        $this->schema->save();
+
+        $this->notify($notifyMessage, 'hub.virtual-products.code-pool.schemas.index');
+    }
 }

@@ -8,7 +8,7 @@
     <form action="#"
           method="POST"
           class="space-y-4"
-          wire:submit.prevent="create">
+          wire:submit.prevent="save">
         @include('lunarphp-virtual-product::partials.forms.code-pool-schema')
 
         @if ($this->canModify)
