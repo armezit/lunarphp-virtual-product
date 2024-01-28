@@ -9,6 +9,8 @@ use Armezit\Lunar\VirtualProduct\Tests\TestCase;
 use Illuminate\Database\Eloquent\Casts\ArrayObject;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Lunar\Base\Purchasable;
+use Lunar\Models\ProductVariant;
 
 class CodePoolItemTest extends TestCase
 {
@@ -75,5 +77,45 @@ class CodePoolItemTest extends TestCase
         ]);
 
         $this->assertInstanceOf(CodePoolSchema::class, $codePoolItem->schema);
+    }
+
+    /** @test */
+    public function can_associate_to_purchasable()
+    {
+        $purchasable = ProductVariant::factory()->create();
+
+        $codePoolBatch = CodePoolBatch::factory()->create([
+            'purchasable_type' => $purchasable->getMorphClass(),
+            'purchasable_id' => $purchasable->id,
+        ]);
+
+        $item = CodePoolItem::factory()->create(['batch_id' => $codePoolBatch->id]);
+        $codePoolBatch->refresh();
+
+        $this->assertInstanceOf(Purchasable::class, $item->purchasable);
+    }
+
+    /** @test */
+    public function query_scope_for_purchasable_is_correct()
+    {
+        $purchasable = ProductVariant::factory()->create();
+
+        $codePoolBatch = CodePoolBatch::factory()->create([
+            'purchasable_type' => $purchasable->getMorphClass(),
+            'purchasable_id' => $purchasable->id,
+        ]);
+
+        CodePoolItem::factory()
+            ->count(10)
+            ->sequence(
+                ['batch_id' => $codePoolBatch->id],
+                ['batch_id' => $this->faker->randomNumber()],
+            )
+            ->create();
+
+        $items = CodePoolItem::forPurchasable($purchasable->id)->get();
+
+        $this->assertContainsOnly(CodePoolItem::class, $items);
+        $this->assertCount(5, $items);
     }
 }
