@@ -2,6 +2,6 @@
 
 namespace Armezit\Lunar\VirtualProduct\Exceptions;
 
-class FieldValidationException extends VirtualProductException
+class CodePoolException extends VirtualProductException
 {
 }

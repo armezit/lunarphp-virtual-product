@@ -3,7 +3,7 @@
 namespace Armezit\Lunar\VirtualProduct\Jobs;
 
 use Armezit\Lunar\VirtualProduct\Enums\CodePoolFieldType;
-use Armezit\Lunar\VirtualProduct\Exceptions\FieldValidationException;
+use Armezit\Lunar\VirtualProduct\Exceptions\CodePool\ImportFieldValidationException;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolBatch;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolItem;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolSchema;
@@ -40,7 +40,7 @@ class ImportCodePoolData implements ShouldQueue
      *
      * @return void
      *
-     * @throws FieldValidationException
+     * @throws ImportFieldValidationException
      */
     public function handle()
     {
@@ -64,7 +64,7 @@ class ImportCodePoolData implements ShouldQueue
     }
 
     /**
-     * @throws FieldValidationException
+     * @throws ImportFieldValidationException
      */
     private function mapRecords(): array
     {
@@ -78,7 +78,7 @@ class ImportCodePoolData implements ShouldQueue
                 $row[$fieldName] = $fieldValue;
 
                 if (! $this->validateField(CodePoolFieldType::from($field['type']), $fieldValue)) {
-                    throw new FieldValidationException(
+                    throw new ImportFieldValidationException(
                         sprintf(
                             "field validation error for field '%s' in data record: [%s]",
                             $fieldName,

@@ -198,7 +198,7 @@ class Import extends Component
             ->toArray();
     }
 
-    private function extractDataFileProperties()
+    private function extractDataFileProperties(): void
     {
         try {
             $reader = new SpreadsheetFileReader($this->file->getRealPath());
@@ -206,8 +206,7 @@ class Import extends Component
             $this->fileRecordsCount = $reader->getRecordsCount();
         } catch (ReaderException $e) {
             Log::warning($e->getMessage());
-
-            return $this->addError(
+            $this->addError(
                 'file',
                 __('The file has error(s). Please check and try again')
             );
