@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Casts\ArrayObject;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Lunar\Base\Purchasable;
 use Lunar\Base\Traits\Searchable;
 use Lunar\Hub\Models\Staff;
@@ -30,6 +34,7 @@ use Lunar\Models\ProductVariant;
  * @property-read Purchasable|ProductVariant $purchasable
  * @property-read Staff $staff
  * @property-read Currency|null $entryPriceCurrency
+ * @property-read CodePoolItem[]|null $items
  *
  * @method Builder forPurchasable(int $purchasableId)
  * @method Builder byStaff(int $staffId)
@@ -68,7 +73,7 @@ class CodePoolBatch extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return config('lunarphp-virtual-product.code_pool.batches_table');
     }
@@ -84,9 +89,9 @@ class CodePoolBatch extends Model
     /**
      * Return the polymorphic relation.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo
      */
-    public function purchasable()
+    public function purchasable(): MorphTo
     {
         return $this->morphTo();
     }
@@ -94,9 +99,9 @@ class CodePoolBatch extends Model
     /**
      * Return the staff member relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function staff()
+    public function staff(): BelongsTo
     {
         return $this->belongsTo(Staff::class);
     }
@@ -104,9 +109,17 @@ class CodePoolBatch extends Model
     /**
      * Returns the entry price currency relation.
      */
-    public function entryPriceCurrency()
+    public function entryPriceCurrency(): HasOne
     {
         return $this->hasOne(Currency::class, 'id', 'entry_price_currency_id');
+    }
+
+    /**
+     * Returns the code pool items relation.
+     */
+    public function items(): HasMany
+    {
+        return $this->hasMany(CodePoolItem::class, 'batch_id', 'id');
     }
 
     /**

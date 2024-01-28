@@ -3,6 +3,7 @@
 namespace Armezit\Lunar\VirtualProduct\Tests\Unit\Models;
 
 use Armezit\Lunar\VirtualProduct\Models\CodePoolBatch;
+use Armezit\Lunar\VirtualProduct\Models\CodePoolItem;
 use Armezit\Lunar\VirtualProduct\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -84,5 +85,22 @@ class CodePoolBatchTest extends TestCase
         ]);
 
         $this->assertInstanceOf(Currency::class, $codePoolBatch->entryPriceCurrency);
+    }
+
+    /** @test */
+    public function can_associate_to_code_pool_items()
+    {
+        $purchasable = ProductVariant::factory()->create();
+
+        $codePoolBatch = CodePoolBatch::factory()->create([
+            'purchasable_type' => $purchasable->getMorphClass(),
+            'purchasable_id' => $purchasable->id,
+        ]);
+
+        CodePoolItem::factory(3)->create(['batch_id' => $codePoolBatch->id]);
+        $codePoolBatch->refresh();
+
+        $this->assertContainsOnly(CodePoolItem::class, $codePoolBatch->items);
+        $this->assertCount(3, $codePoolBatch->items);
     }
 }
