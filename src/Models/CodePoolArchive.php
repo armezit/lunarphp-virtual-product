@@ -32,6 +32,13 @@ class CodePoolArchive extends Model
     ];
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>|bool
+     */
+    protected $guarded = [];
+
+    /**
      * Get the table associated with the model.
      *
      * @return string
