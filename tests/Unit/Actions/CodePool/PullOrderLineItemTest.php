@@ -4,6 +4,7 @@ namespace Armezit\Lunar\VirtualProduct\Tests\Unit\Actions\CodePool;
 
 use Armezit\Lunar\VirtualProduct\Actions\CodePool\PullOrderLineItem;
 use Armezit\Lunar\VirtualProduct\Enums\CodePoolFieldType;
+use Armezit\Lunar\VirtualProduct\Exceptions\CodePool\OutOfStockException;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolArchive;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolBatch;
 use Armezit\Lunar\VirtualProduct\Models\CodePoolItem;
@@ -31,12 +32,6 @@ class PullOrderLineItemTest extends TestCase
     }
 
     /** @test */
-    public function throws_exception_if_purchasable_is_out_of_stock()
-    {
-
-    }
-
-    /** @test */
     public function can_pull_code_pool_item_correctly()
     {
         $purchasable = ProductVariant::factory()->create();
@@ -54,7 +49,7 @@ class PullOrderLineItemTest extends TestCase
             ],
         ]);
 
-        $items = CodePoolItem::factory()
+        CodePoolItem::factory()
             ->count(5)
             ->sequence(
                 ['batch_id' => $codePoolBatch->id],
@@ -87,5 +82,48 @@ class PullOrderLineItemTest extends TestCase
         ]);
 
         $this->assertDatabaseCount($this->getCodePoolItemTable(), 2);
+    }
+
+    /** @test */
+    public function throws_exception_if_purchasable_is_out_of_stock()
+    {
+        $purchasable = ProductVariant::factory()->create();
+
+        $codePoolBatch = CodePoolBatch::factory()->create([
+            'purchasable_type' => $purchasable->getMorphClass(),
+            'purchasable_id' => $purchasable->id,
+        ]);
+
+        $codePoolSchema = CodePoolSchema::factory()->create([
+            'name' => $this->faker->word,
+            'fields' => [
+                ['name' => $this->faker->word, 'type' => CodePoolFieldType::Raw, 'order' => 1],
+                ['name' => $this->faker->word, 'type' => CodePoolFieldType::Integer, 'order' => 2],
+            ],
+        ]);
+
+        CodePoolItem::factory()
+            ->count(2)
+            ->state(new Sequence(
+                fn(Sequence $sequence) => [
+                    'data' => [
+                        'foo' => $this->faker->word,
+                        'bar' => $this->faker->numberBetween(1, 1000),
+                    ]],
+            ))
+            ->create([
+                'batch_id' => $codePoolBatch->id,
+                'schema_id' => $codePoolSchema->id,
+            ]);
+
+        $orderLine = OrderLine::factory()->create([
+            'purchasable_type' => $purchasable->getMorphClass(),
+            'purchasable_id' => $purchasable->id,
+            'quantity' => 3,
+        ]);
+
+        $this->expectException(OutOfStockException::class);
+
+        app(PullOrderLineItem::class)->execute($orderLine);
     }
 }
