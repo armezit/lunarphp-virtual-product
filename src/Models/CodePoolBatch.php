@@ -70,8 +70,6 @@ class CodePoolBatch extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -88,8 +86,6 @@ class CodePoolBatch extends Model
 
     /**
      * Return the polymorphic relation.
-     *
-     * @return MorphTo
      */
     public function purchasable(): MorphTo
     {
@@ -98,8 +94,6 @@ class CodePoolBatch extends Model
 
     /**
      * Return the staff member relationship.
-     *
-     * @return BelongsTo
      */
     public function staff(): BelongsTo
     {

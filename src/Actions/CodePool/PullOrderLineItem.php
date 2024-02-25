@@ -14,12 +14,9 @@ use Throwable;
  */
 class PullOrderLineItem
 {
-
     /**
      * Execute the action
      *
-     * @param OrderLine $orderLine
-     * @return void
      * @throws Exceptions\CodePool\OutOfStockException
      * @throws Exceptions\CodePool\PullOrderLineItemException
      */
@@ -46,6 +43,7 @@ class PullOrderLineItem
                     $record['order_line_id'] = $orderLine->id;
                     $record['data'] = json_encode($item->data);
                     unset($record['id']);
+
                     return $record;
                 })
                 ->toArray();

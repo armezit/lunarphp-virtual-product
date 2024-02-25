@@ -11,16 +11,13 @@ use Lunar\Models\OrderLine;
 class OutOfStockException extends CodePoolException
 {
     /**
-     * @param OrderLine $orderLine
-     * @param int $available Available code-pool items count
-     * @param \Throwable|null $previous
+     * @param  int  $available  Available code-pool items count
      */
     public function __construct(
         public OrderLine $orderLine,
-        public int       $available,
-        ?\Throwable      $previous = null
-    )
-    {
+        public int $available,
+        ?\Throwable $previous = null
+    ) {
         parent::__construct('virtual product is out of stock', previous: $previous);
     }
 }

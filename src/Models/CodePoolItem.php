@@ -73,8 +73,6 @@ class CodePoolItem extends Model
 
     /**
      * Return the polymorphic relation.
-     *
-     * @return MorphTo
      */
     public function purchasable(): MorphTo
     {
