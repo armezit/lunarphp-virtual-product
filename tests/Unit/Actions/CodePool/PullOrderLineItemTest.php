@@ -56,7 +56,7 @@ class PullOrderLineItemTest extends TestCase
                 ['batch_id' => $this->faker->randomNumber()],
             )
             ->state(new Sequence(
-                fn(Sequence $sequence) => [
+                fn (Sequence $sequence) => [
                     'data' => [
                         'foo' => $this->faker->word,
                         'bar' => $this->faker->numberBetween(1, 1000),
@@ -105,7 +105,7 @@ class PullOrderLineItemTest extends TestCase
         CodePoolItem::factory()
             ->count(2)
             ->state(new Sequence(
-                fn(Sequence $sequence) => [
+                fn (Sequence $sequence) => [
                     'data' => [
                         'foo' => $this->faker->word,
                         'bar' => $this->faker->numberBetween(1, 1000),
