@@ -10,6 +10,9 @@ return [
     'pages.import.title' => 'Import items',
 
     'partials.forms.schema.data_fields' => 'Data fields',
+    'partials.forms.schema.name' => 'Name',
+    'partials.forms.schema.field_name' => 'Field name',
+    'partials.forms.schema.field_type' => 'Field type',
     'partials.forms.schema.add_field' => 'Add field',
     'partials.forms.schema.delete_field' => 'Delete field',
     'partials.forms.schema.delete_schema' => 'Delete data schema',

@@ -46,9 +46,19 @@ class ProductSettings extends Component
 
     public function updated(string $prop, mixed $data)
     {
-        $this->emitTo('hub.lunarphp-virtual-product.slots.virtual-product-slot', 'sourceUpdated', [
+        $payload = [
             'source' => CodePool::class,
             'data' => [$prop => $data],
-        ]);
+        ];
+
+        if (method_exists($this, 'dispatch')) {
+            $this->dispatch('sourceUpdated', $payload)
+                ->to('hub.lunarphp-virtual-product.slots.virtual-product-slot');
+
+            return;
+        }
+
+        /** @phpstan-ignore-next-line Supports Livewire 2 applications. */
+        $this->emitTo('hub.lunarphp-virtual-product.slots.virtual-product-slot', 'sourceUpdated', $payload);
     }
 }

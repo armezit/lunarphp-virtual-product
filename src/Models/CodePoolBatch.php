@@ -13,11 +13,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 use Lunar\Base\Purchasable;
 use Lunar\Base\Traits\Searchable;
-use Lunar\Hub\Models\Staff;
 use Lunar\Models\Currency;
 use Lunar\Models\ProductVariant;
+use Lunar\Models\Staff;
 
 /**
  * @property int $id
@@ -29,10 +30,10 @@ use Lunar\Models\ProductVariant;
  * @property int|null $entry_price_currency_id
  * @property string|null $notes
  * @property ArrayObject $meta
- * @property ?\Illuminate\Support\Carbon $created_at
- * @property ?\Illuminate\Support\Carbon $updated_at
+ * @property ?Carbon $created_at
+ * @property ?Carbon $updated_at
  * @property-read Purchasable|ProductVariant $purchasable
- * @property-read Staff $staff
+ * @property-read Staff|\Lunar\Hub\Models\Staff $staff
  * @property-read Currency|null $entryPriceCurrency
  * @property-read CodePoolItem[]|null $items
  *
@@ -97,7 +98,7 @@ class CodePoolBatch extends Model
      */
     public function staff(): BelongsTo
     {
-        return $this->belongsTo(Staff::class);
+        return $this->belongsTo($this->staffModelClass());
     }
 
     /**
@@ -144,6 +145,18 @@ class CodePoolBatch extends Model
     public function scopeByStaff(Builder $builder, int $staffId): Builder
     {
         return $builder->where('staff_id', $staffId);
+    }
+
+    /**
+     * Get the staff model class for the installed Lunar generation.
+     */
+    private function staffModelClass(): string
+    {
+        if (class_exists(Staff::class)) {
+            return Staff::class;
+        }
+
+        return \Lunar\Hub\Models\Staff::class;
     }
 
     /**

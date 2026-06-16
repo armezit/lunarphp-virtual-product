@@ -2,6 +2,7 @@
 
 return [
     'virtual-product' => 'Virtual product',
+    'enabled' => 'Enabled',
     'source.enabled_tooltip' => 'Enable/disable this source for the current product.',
     'source.stock' => 'Stock',
 

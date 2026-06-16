@@ -10,6 +10,9 @@ return [
     'pages.import.title' => 'بارگذاری اقلام',
 
     'partials.forms.schema.data_fields' => 'فیلدهای داده',
+    'partials.forms.schema.name' => 'نام',
+    'partials.forms.schema.field_name' => 'نام فیلد',
+    'partials.forms.schema.field_type' => 'نوع فیلد',
     'partials.forms.schema.add_field' => 'افزودن فیلد',
     'partials.forms.schema.delete_field' => 'حذف فیلد',
     'partials.forms.schema.delete_schema' => 'حذف الگوی اقلام',

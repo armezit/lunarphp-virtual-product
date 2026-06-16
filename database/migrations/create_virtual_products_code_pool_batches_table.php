@@ -16,7 +16,7 @@ return new class extends Migration
         $tableName = config('lunarphp-virtual-product.code_pool.batches_table');
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
-            $table->morphs('purchasable');
+            $table->morphs('purchasable', 'vp_code_pool_batches_purchasable_index');
             $table->foreignId('staff_id')->index();
             $table->string('status')->index();
             $table->integer('entry_price')->unsigned()->nullable();

@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  legacy-tests:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
@@ -24,7 +24,7 @@ jobs:
             testbench: 8.*
             carbon: ^2.64.1
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+    name: Legacy tests - P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.os }}
 
     steps:
       - name: Checkout code
@@ -52,3 +52,69 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/pest --ci
+
+  modern-compatibility:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - php: '8.2'
+            laravel: '11.*'
+            testbench: '9.*'
+            livewire: '^3.0'
+            lunar: '^1.0'
+            laravel_data: '^4.0'
+            phpspreadsheet: '^2.0'
+          - php: '8.3'
+            laravel: '12.*'
+            testbench: '10.*'
+            livewire: '^3.0'
+            lunar: '^1.0'
+            laravel_data: '^4.0'
+            phpspreadsheet: '^3.0|^4.0|^5.0'
+          - php: '8.4'
+            laravel: '13.*'
+            testbench: '11.*'
+            livewire: '^3.0'
+            lunar: '^1.0'
+            laravel_data: '^4.0'
+            phpspreadsheet: '^5.0'
+
+    name: Modern compatibility - P${{ matrix.php }} - L${{ matrix.laravel }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: none
+
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Install dependencies
+        run: |
+          composer require \
+            "laravel/framework:${{ matrix.laravel }}" \
+            "orchestra/testbench:${{ matrix.testbench }}" \
+            "livewire/livewire:${{ matrix.livewire }}" \
+            "lunarphp/lunar:${{ matrix.lunar }}" \
+            "spatie/laravel-data:${{ matrix.laravel_data }}" \
+            "phpoffice/phpspreadsheet:${{ matrix.phpspreadsheet }}" \
+            --no-interaction \
+            --no-update
+          composer update --prefer-stable --prefer-dist --no-interaction
+
+      - name: Validate package metadata
+        run: composer validate --strict
+
+      - name: Verify package classes autoload
+        run: |
+          php -r 'require "vendor/autoload.php"; foreach (["Armezit\\Lunar\\VirtualProduct\\VirtualProductServiceProvider", "Armezit\\Lunar\\VirtualProduct\\VirtualProductHubServiceProvider", "Armezit\\Lunar\\VirtualProduct\\Http\\Livewire\\Components\\CodePool\\ProductSettings", "Armezit\\Lunar\\VirtualProduct\\Models\\CodePoolBatch", "Armezit\\Lunar\\VirtualProduct\\Lunar\\Extensions\\ProductResourceExtension", "Armezit\\Lunar\\VirtualProduct\\Filament\\Resources\\ProductResource\\Pages\\ManageVirtualProduct"] as $class) { if (! class_exists($class)) { fwrite(STDERR, $class." missing".PHP_EOL); exit(1); } }'

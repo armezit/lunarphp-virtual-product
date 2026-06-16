@@ -17,16 +17,19 @@ use Livewire\Livewire;
 use Lunar\Hub\Facades\Menu;
 use Lunar\Hub\Facades\Slot;
 use Lunar\Hub\Menu\MenuLink;
+use Lunar\Hub\Menu\MenuSlot;
 
 class VirtualProductHubServiceProvider extends ServiceProvider
 {
     /**
      * Boot up the service provider.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
+        if (! class_exists(Menu::class) || ! class_exists(Slot::class)) {
+            return;
+        }
+
         $this->registerLivewireComponents();
         $this->registerHubSlots();
         $this->registerMenu();
@@ -34,10 +37,8 @@ class VirtualProductHubServiceProvider extends ServiceProvider
 
     /**
      * Register the hub's Livewire components.
-     *
-     * @return void
      */
-    protected function registerLivewireComponents()
+    protected function registerLivewireComponents(): void
     {
         Livewire::component('hub.lunarphp-virtual-product.slots.virtual-product-slot', VirtualProductSlot::class);
 
@@ -53,7 +54,7 @@ class VirtualProductHubServiceProvider extends ServiceProvider
         Livewire::component('hub.lunarphp-virtual-product.components.code_pool.import', Import::class);
     }
 
-    protected function registerHubSlots()
+    protected function registerHubSlots(): void
     {
         if (config('lunarphp-virtual-product.register_hub_slots', true)) {
             Slot::register(
@@ -63,9 +64,9 @@ class VirtualProductHubServiceProvider extends ServiceProvider
         }
     }
 
-    protected function registerMenu()
+    protected function registerMenu(): void
     {
-        /** @var \Lunar\Hub\Menu\MenuSlot $sidebarSlot */
+        /** @var MenuSlot $sidebarSlot */
         $sidebarSlot = Menu::slot('sidebar');
 
         $catalogueGroup = $sidebarSlot->group('hub.catalogue');
@@ -99,7 +100,7 @@ class VirtualProductHubServiceProvider extends ServiceProvider
         });
     }
 
-    protected function registerTableBuilders()
+    protected function registerTableBuilders(): void
     {
         $tableBuilders = [
             CodePoolSchemasTableBuilder::class,
@@ -107,7 +108,7 @@ class VirtualProductHubServiceProvider extends ServiceProvider
 
         foreach ($tableBuilders as $tableBuilder) {
             $this->app->singleton($tableBuilder, function ($app) use ($tableBuilder) {
-                return new $tableBuilder();
+                return new $tableBuilder;
             });
         }
     }
